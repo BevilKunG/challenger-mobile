@@ -8,10 +8,13 @@ const styles = StyleSheet.create({
   rewardContainer: {
     flex: 1,
   },
-  rewardListContainer: {
+  scrollViewContainer: {
     flex: 1,
     paddingVertical: normalize(36),
     paddingHorizontal: normalize(24),
+  },
+  rewardListContainer: {
+    flex: 1,
   },
 })
 
@@ -36,10 +39,12 @@ const rewards = [
 
 const RewardList: FC = () => {
   return (
-    <ScrollView style={[styles.rewardListContainer]}>
-      {rewards.map((reward) => (
-        <RewardCard {...{ reward }} />
-      ))}
+    <ScrollView style={[styles.scrollViewContainer]}>
+      <View style={[styles.rewardListContainer]}>
+        {rewards.map((reward) => (
+          <RewardCard {...{ reward }} />
+        ))}
+      </View>
     </ScrollView>
   )
 }

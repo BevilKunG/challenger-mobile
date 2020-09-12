@@ -1,8 +1,10 @@
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import normalize from 'react-native-normalize'
 
-type Reward = {
+import { RewardCardContext, RewardCardProvider } from '../lib/RewardCardContext'
+
+export type Reward = {
   name: string
   point: number
 }
@@ -36,7 +38,6 @@ const styles = StyleSheet.create({
     marginBottom: normalize(8),
   },
   getRewardButton: {
-    backgroundColor: '#32CD32',
     paddingVertical: normalize(6),
     paddingHorizontal: normalize(12),
     borderRadius: 8,
@@ -46,19 +47,46 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
+  availableButton: {
+    backgroundColor: '#32CD32',
+  },
+  unavailableButton: {
+    backgroundColor: '#696969',
+  },
 })
+
+const GetRewardButton: FC = () => {
+  const userPoint = 50
+  const { reward } = useContext(RewardCardContext)
+
+  if (reward && userPoint >= reward.point) {
+    return (
+      <TouchableOpacity
+        style={[styles.getRewardButton, styles.availableButton]}
+      >
+        <Text style={[styles.getRewardText]}>แลก</Text>
+      </TouchableOpacity>
+    )
+  }
+
+  return (
+    <View style={[styles.getRewardButton, styles.unavailableButton]}>
+      <Text style={[styles.getRewardText]}>แลก</Text>
+    </View>
+  )
+}
 
 export const RewardCard: FC<IRewardCardProps> = ({ reward }) => {
   return (
-    <View style={[styles.rewardCardContainer]}>
-      <View style={[styles.rewardImage]} />
-      <View style={[styles.detailContainer]}>
-        <Text style={[styles.rewardName]}>{reward.name}</Text>
-        <Text style={[styles.rewardPoint]}>{`${reward.point} points`}</Text>
-        <TouchableOpacity style={[styles.getRewardButton]}>
-          <Text style={[styles.getRewardText]}>แลก</Text>
-        </TouchableOpacity>
+    <RewardCardProvider {...{ reward }}>
+      <View style={[styles.rewardCardContainer]}>
+        <View style={[styles.rewardImage]} />
+        <View style={[styles.detailContainer]}>
+          <Text style={[styles.rewardName]}>{reward.name}</Text>
+          <Text style={[styles.rewardPoint]}>{`${reward.point} points`}</Text>
+          <GetRewardButton />
+        </View>
       </View>
-    </View>
+    </RewardCardProvider>
   )
 }
