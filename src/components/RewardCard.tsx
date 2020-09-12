@@ -1,10 +1,8 @@
-import React, { FC, useContext } from 'react'
+import React, { FC } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import normalize from 'react-native-normalize'
 
-import { RewardCardContext, RewardCardProvider } from '../lib/RewardCardContext'
-
-export type Reward = {
+type Reward = {
   name: string
   point: number
 }
@@ -58,11 +56,10 @@ const styles = StyleSheet.create({
   },
 })
 
-const GetRewardButton: FC = () => {
-  const userPoint = 50
-  const { reward } = useContext(RewardCardContext)
+const GetRewardButton: FC<IRewardCardProps> = ({ reward }) => {
+  const userPoint = 60
 
-  if (reward && userPoint >= reward.point) {
+  if (userPoint >= reward.point) {
     return (
       <TouchableOpacity
         style={[styles.getRewardButton, styles.availableButton]}
@@ -81,15 +78,13 @@ const GetRewardButton: FC = () => {
 
 export const RewardCard: FC<IRewardCardProps> = ({ reward }) => {
   return (
-    <RewardCardProvider {...{ reward }}>
-      <View style={[styles.rewardCardContainer]}>
-        <View style={[styles.rewardImage]} />
-        <View style={[styles.detailContainer]}>
-          <Text style={[styles.rewardName]}>{reward.name}</Text>
-          <Text style={[styles.rewardPoint]}>{`${reward.point} points`}</Text>
-          <GetRewardButton />
-        </View>
+    <View style={[styles.rewardCardContainer]}>
+      <View style={[styles.rewardImage]} />
+      <View style={[styles.detailContainer]}>
+        <Text style={[styles.rewardName]}>{reward.name}</Text>
+        <Text style={[styles.rewardPoint]}>{`${reward.point} points`}</Text>
+        <GetRewardButton {...{ reward }} />
       </View>
-    </RewardCardProvider>
+    </View>
   )
 }
