@@ -15,16 +15,19 @@ interface IRewardCardProps {
 
 const styles = StyleSheet.create({
   rewardCardContainer: {
-    flex: 1,
-    height: normalize(300),
+    width: '45%',
+    marginVertical: normalize(10),
+    backgroundColor: '#ffffff',
+    shadowColor: '#000000',
+    shadowOpacity: 0.1,
+    shadowRadius: 0.5,
+    elevation: 2,
   },
   rewardImage: {
-    flex: 2,
+    height: normalize(120),
     backgroundColor: '#708090',
-    borderRadius: 8,
   },
   detailContainer: {
-    flex: 1,
     padding: normalize(16),
     justifyContent: 'center',
     alignItems: 'center',

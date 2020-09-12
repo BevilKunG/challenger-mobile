@@ -14,7 +14,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: normalize(24),
   },
   rewardListContainer: {
-    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
   },
 })
 
@@ -42,7 +44,7 @@ const RewardList: FC = () => {
     <ScrollView style={[styles.scrollViewContainer]}>
       <View style={[styles.rewardListContainer]}>
         {rewards.map((reward) => (
-          <RewardCard {...{ reward }} />
+          <RewardCard key={reward.name} {...{ reward }} />
         ))}
       </View>
     </ScrollView>
