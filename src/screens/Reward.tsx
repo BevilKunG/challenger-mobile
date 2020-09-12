@@ -1,5 +1,8 @@
 import React, { FC } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, ScrollView, StyleSheet } from 'react-native'
+import normalize from 'react-native-normalize'
+
+import { RewardCard } from '../components/RewardCard'
 
 const styles = StyleSheet.create({
   rewardContainer: {
@@ -7,16 +10,37 @@ const styles = StyleSheet.create({
   },
   rewardListContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingVertical: normalize(36),
+    paddingHorizontal: normalize(24),
   },
 })
 
+const rewards = [
+  {
+    name: 'Reward #1',
+    point: 20,
+  },
+  {
+    name: 'Reward #2',
+    point: 40,
+  },
+  {
+    name: 'Reward #3',
+    point: 60,
+  },
+  {
+    name: 'Reward #4',
+    point: 80,
+  },
+]
+
 const RewardList: FC = () => {
   return (
-    <View style={[styles.rewardListContainer]}>
-      <Text>RewardList</Text>
-    </View>
+    <ScrollView style={[styles.rewardListContainer]}>
+      {rewards.map((reward) => (
+        <RewardCard {...{ reward }} />
+      ))}
+    </ScrollView>
   )
 }
 
