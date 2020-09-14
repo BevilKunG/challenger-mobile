@@ -1,25 +1,34 @@
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FC, useContext } from 'react'
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
   StyleSheet,
+  Platform,
 } from 'react-native'
 import normalize from 'react-native-normalize'
 
+import { RootStackParamList } from '../../../App'
 import {
   RewardFormProvider,
   RewardFormContext,
+  initState,
+  IRewardFormState,
 } from '../../lib/RewardFormContext'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: normalize(36),
   },
   formContainer: {
     flex: 1,
+    paddingVertical: normalize(36),
     paddingHorizontal: normalize(22),
   },
   fieldContainer: {
@@ -37,39 +46,98 @@ const styles = StyleSheet.create({
     paddingHorizontal: normalize(4),
     borderRadius: normalize(4),
   },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginTop: normalize(40),
+  },
+  buttonText: {
+    fontSize: 16,
+  },
+  submitButton: {
+    color: '#147EFB',
+  },
 })
 
+type RewardNewStackProp = StackNavigationProp<RootStackParamList, 'RewardNew'>
+type ValidateForm = (state: IRewardFormState) => boolean
+
+const validateForm: ValidateForm = ({ name, point }) => {
+  const nameNotEmpty = /^.+$/g.test(name)
+  const pointOnlyNumber = !isNaN(point)
+
+  return nameNotEmpty && pointOnlyNumber
+}
+
 const RewardForm: FC = () => {
+  const navigation = useNavigation<RewardNewStackProp>()
   const { state, dispatch } = useContext(RewardFormContext)
   if (!state || !dispatch) return null
 
+  const resetForm = () => {
+    dispatch(initState)
+  }
+
+  const onCancelPress = () => {
+    resetForm()
+    navigation.goBack()
+  }
+
+  const onSubmitPress = () => {
+    if (validateForm(state)) {
+      resetForm()
+      navigation.goBack()
+    }
+  }
+
   return (
-    <View style={[styles.formContainer]}>
-      <View style={[styles.fieldContainer]}>
-        <Text style={[styles.label]}>Reward Name</Text>
-        <TextInput
-          style={[styles.textInput]}
-          placeholder="Reward Name"
-          onChangeText={(name) => dispatch({ name })}
-          value={state.name}
-        />
-      </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={[styles.formContainer]}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ flex: 1 }}>
+          <View style={[styles.fieldContainer]}>
+            <Text style={[styles.label]}>Reward Name</Text>
+            <TextInput
+              style={[styles.textInput]}
+              placeholder="Reward Name"
+              onChangeText={(name) => dispatch({ name })}
+              value={state.name}
+            />
+          </View>
 
-      <View style={[styles.fieldContainer]}>
-        <Text style={[styles.label]}>Point</Text>
-        <TextInput
-          style={[styles.textInput]}
-          keyboardType="numeric"
-          placeholder="Point"
-          onChangeText={(point) => dispatch({ point: parseInt(point) })}
-          value={`${state.point}`}
-        />
-      </View>
+          <View style={[styles.fieldContainer]}>
+            <Text style={[styles.label]}>Point</Text>
+            <TextInput
+              style={[styles.textInput]}
+              keyboardType="numeric"
+              placeholder="Point"
+              onChangeText={(text) => {
+                if (text.length === 0) dispatch({ point: 0 })
+                else if (/^[0-9]*$/g.test(text)) {
+                  dispatch({ point: parseInt(text) })
+                }
+              }}
+              value={`${state.point}`}
+            />
+          </View>
 
-      <TouchableOpacity>
-        <Text>Submit</Text>
-      </TouchableOpacity>
-    </View>
+          <View style={[styles.buttonsContainer]}>
+            <TouchableOpacity onPress={onCancelPress}>
+              <Text style={[styles.buttonText]}>Cancel</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={onSubmitPress}>
+              <Text style={[styles.buttonText, styles.submitButton]}>
+                Submit
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   )
 }
 

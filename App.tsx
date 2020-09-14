@@ -32,7 +32,7 @@ const RewardTab = () => {
       <Stack.Screen
         name="RewardNew"
         component={RewardNew}
-        options={{ headerShown: false }}
+        options={{ title: 'Add New Reward' }}
       />
     </Stack.Navigator>
   )

@@ -4,7 +4,7 @@ interface IRewardFormProvider {
   children: any
 }
 
-interface IRewardFormState {
+export interface IRewardFormState {
   name: string
   point: number
 }
@@ -26,7 +26,7 @@ const reducer: Reducer<IRewardFormState, Partial<IRewardFormState>> = (
   }
 }
 
-const initState: IRewardFormState = {
+export const initState: IRewardFormState = {
   name: '',
   point: 0,
 }
