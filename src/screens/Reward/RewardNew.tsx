@@ -62,14 +62,6 @@ const styles = StyleSheet.create({
 })
 
 type RewardNewStackProp = StackNavigationProp<RootStackParamList, 'RewardNew'>
-// type ValidateForm = (state: IRewardFormState) => boolean
-
-// const validateForm: ValidateForm = ({ name, point }) => {
-//   const nameNotEmpty = /^.+$/g.test(name)
-//   const pointOnlyNumber = !isNaN(point)
-
-//   return nameNotEmpty && pointOnlyNumber
-// }
 
 const RewardForm: FC = () => {
   const navigation = useNavigation<RewardNewStackProp>()

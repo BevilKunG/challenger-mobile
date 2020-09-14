@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1600091392247" clover="3.2.0">
+  <project timestamp="1600091392249" name="All files">
+    <metrics statements="13" coveredstatements="10" conditionals="3" coveredconditionals="3" methods="4" coveredmethods="2" elements="20" coveredelements="15" complexity="0" loc="13" ncloc="13" packages="1" files="1" classes="1"/>
+    <file name="RewardFormContext.tsx" path="/Users/parinya/dev/challenger-mobile/src/lib/RewardFormContext.tsx">
+      <metrics statements="13" coveredstatements="10" conditionals="3" coveredconditionals="3" methods="4" coveredmethods="2"/>
+      <line num="19" count="1" type="stmt"/>
+      <line num="23" count="4" type="stmt"/>
+      <line num="29" count="1" type="stmt"/>
+      <line num="34" count="1" type="stmt"/>
+      <line num="36" count="0" type="stmt"/>
+      <line num="39" count="1" type="stmt"/>
+      <line num="42" count="0" type="stmt"/>
+      <line num="43" count="0" type="stmt"/>
+      <line num="50" count="1" type="stmt"/>
+      <line num="51" count="4" type="stmt"/>
+      <line num="52" count="4" type="stmt"/>
+      <line num="53" count="4" type="stmt"/>
+      <line num="55" count="4" type="cond" truecount="3" falsecount="0"/>
+    </file>
+  </project>
+</coverage>
