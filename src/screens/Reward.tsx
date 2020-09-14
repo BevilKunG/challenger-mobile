@@ -1,5 +1,13 @@
+import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React, { FC } from 'react'
-import { View, ScrollView, StyleSheet } from 'react-native'
+import {
+  View,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native'
 import normalize from 'react-native-normalize'
 
 import { RewardCard } from '../components/RewardCard'
@@ -7,10 +15,10 @@ import { RewardCard } from '../components/RewardCard'
 const styles = StyleSheet.create({
   rewardContainer: {
     flex: 1,
+    paddingVertical: normalize(36),
   },
   scrollViewContainer: {
     flex: 1,
-    paddingVertical: normalize(36),
     paddingHorizontal: normalize(24),
   },
   rewardListContainer: {
@@ -18,6 +26,24 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: normalize(22),
+    paddingVertical: normalize(16),
+  },
+  headerBrand: {
+    flex: 4,
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  headerMenu: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  }
 })
 
 const rewards = [
@@ -51,9 +77,27 @@ const RewardList: FC = () => {
   )
 }
 
+const RewardHeader: FC = () => {
+  return (
+    <View style={[styles.headerContainer]}>
+      <Text style={[styles.headerBrand]}>Challenge</Text>
+      <View style={[styles.headerMenu]}>
+        <TouchableOpacity onPress={() => {}}>
+          <FontAwesomeIcon icon={faPlus} size={18} />
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <FontAwesomeIcon icon={faEdit} size={18} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  )
+}
+
 export const Reward: FC = () => {
   return (
     <View style={[styles.rewardContainer]}>
+      <RewardHeader />
       <RewardList />
     </View>
   )
