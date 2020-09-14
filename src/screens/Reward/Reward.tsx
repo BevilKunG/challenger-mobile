@@ -1,5 +1,7 @@
 import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FC } from 'react'
 import {
   View,
@@ -10,7 +12,8 @@ import {
 } from 'react-native'
 import normalize from 'react-native-normalize'
 
-import { RewardCard } from '../components/RewardCard'
+import { RootStackParamList } from '../../../App'
+import { RewardCard } from '../../components/RewardCard'
 
 const styles = StyleSheet.create({
   rewardContainer: {
@@ -43,8 +46,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-  }
+  },
 })
+
+type RewardStackProp = StackNavigationProp<RootStackParamList, 'Reward'>
 
 const rewards = [
   {
@@ -78,11 +83,16 @@ const RewardList: FC = () => {
 }
 
 const RewardHeader: FC = () => {
+  const navigation = useNavigation<RewardStackProp>()
+  const onAddPress = () => {
+    navigation.push('RewardNew')
+  }
+
   return (
     <View style={[styles.headerContainer]}>
       <Text style={[styles.headerBrand]}>Challenge</Text>
       <View style={[styles.headerMenu]}>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={onAddPress}>
           <FontAwesomeIcon icon={faPlus} size={18} />
         </TouchableOpacity>
 

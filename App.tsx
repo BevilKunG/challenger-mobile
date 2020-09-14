@@ -1,24 +1,49 @@
 import 'react-native-gesture-handler'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
 import { Home } from './src/screens/Home'
-import { Reward } from './src/screens/Reward'
+import { Reward } from './src/screens/Reward/Reward'
+import { RewardNew } from './src/screens/Reward/RewardNew'
 
-export type RootStackParamList = {
-  Home: any
-  Reward: any
+export type RootBottomTabParamList = {
+  HomeTab: any
+  RewardTab: any
 }
 
-const Tab = createBottomTabNavigator()
+export type RootStackParamList = {
+  Reward: any
+  RewardNew: any
+}
+
+const Tab = createBottomTabNavigator<RootBottomTabParamList>()
+const Stack = createStackNavigator<RootStackParamList>()
+
+const RewardTab = () => {
+  return (
+    <Stack.Navigator initialRouteName="Reward">
+      <Stack.Screen
+        name="Reward"
+        component={Reward}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="RewardNew"
+        component={RewardNew}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  )
+}
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Home">
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Reward" component={Reward} />
+      <Tab.Navigator initialRouteName="HomeTab">
+        <Tab.Screen name="HomeTab" component={Home} />
+        <Tab.Screen name="RewardTab" component={RewardTab} />
       </Tab.Navigator>
     </NavigationContainer>
   )
