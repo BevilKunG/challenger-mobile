@@ -16,7 +16,7 @@ interface IRewardFormContext {
 
 type ValidateForm = (state: IRewardFormState) => boolean
 
-const reducer: Reducer<IRewardFormState, Partial<IRewardFormState>> = (
+export const reducer: Reducer<IRewardFormState, Partial<IRewardFormState>> = (
   prev,
   current,
 ) => {
