@@ -20,7 +20,7 @@ import {
   RewardFormProvider,
   RewardFormContext,
   initState,
-  IRewardFormState,
+  validateForm,
 } from '../../lib/RewardFormContext'
 
 const styles = StyleSheet.create({
@@ -62,14 +62,14 @@ const styles = StyleSheet.create({
 })
 
 type RewardNewStackProp = StackNavigationProp<RootStackParamList, 'RewardNew'>
-type ValidateForm = (state: IRewardFormState) => boolean
+// type ValidateForm = (state: IRewardFormState) => boolean
 
-const validateForm: ValidateForm = ({ name, point }) => {
-  const nameNotEmpty = /^.+$/g.test(name)
-  const pointOnlyNumber = !isNaN(point)
+// const validateForm: ValidateForm = ({ name, point }) => {
+//   const nameNotEmpty = /^.+$/g.test(name)
+//   const pointOnlyNumber = !isNaN(point)
 
-  return nameNotEmpty && pointOnlyNumber
-}
+//   return nameNotEmpty && pointOnlyNumber
+// }
 
 const RewardForm: FC = () => {
   const navigation = useNavigation<RewardNewStackProp>()

@@ -14,6 +14,8 @@ interface IRewardFormContext {
   dispatch: Dispatch<Partial<IRewardFormState>>
 }
 
+type ValidateForm = (state: IRewardFormState) => boolean
+
 const reducer: Reducer<IRewardFormState, Partial<IRewardFormState>> = (
   prev,
   current,
@@ -43,4 +45,12 @@ export const RewardFormProvider: FC<IRewardFormProviderProps> = ({
       {children}
     </RewardFormContext.Provider>
   )
+}
+
+export const validateForm: ValidateForm = ({ name, point }) => {
+  const nameNotEmpty = /^.+$/g.test(name)
+  const pointOnlyNumber = !isNaN(point)
+  const pointGreaterThanZero = point > 0
+
+  return nameNotEmpty && pointOnlyNumber && pointGreaterThanZero
 }
