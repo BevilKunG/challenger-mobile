@@ -15,6 +15,7 @@ import {
 import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'
+import { RewardContext, RewardActionTypes } from '../../lib/RewardContext'
 import {
   RewardFormProvider,
   RewardFormContext,
@@ -72,11 +73,15 @@ const validateForm: ValidateForm = ({ name, point }) => {
 
 const RewardForm: FC = () => {
   const navigation = useNavigation<RewardNewStackProp>()
-  const { state, dispatch } = useContext(RewardFormContext)
-  if (!state || !dispatch) return null
+
+  const { dispatch: rewardsDispatch } = useContext(RewardContext)
+
+  const { state: formState, dispatch: formDispatch } = useContext(
+    RewardFormContext,
+  )
 
   const resetForm = () => {
-    dispatch(initState)
+    formDispatch(initState)
   }
 
   const onCancelPress = () => {
@@ -85,7 +90,11 @@ const RewardForm: FC = () => {
   }
 
   const onSubmitPress = () => {
-    if (validateForm(state)) {
+    if (validateForm(formState)) {
+      rewardsDispatch({
+        type: RewardActionTypes.AddReward,
+        payload: formState,
+      })
       resetForm()
       navigation.goBack()
     }
@@ -103,8 +112,8 @@ const RewardForm: FC = () => {
             <TextInput
               style={[styles.textInput]}
               placeholder="Reward Name"
-              onChangeText={(name) => dispatch({ name })}
-              value={state.name}
+              onChangeText={(name) => formDispatch({ name })}
+              value={formState.name}
             />
           </View>
 
@@ -115,12 +124,12 @@ const RewardForm: FC = () => {
               keyboardType="numeric"
               placeholder="Point"
               onChangeText={(text) => {
-                if (text.length === 0) dispatch({ point: 0 })
+                if (text.length === 0) formDispatch({ point: 0 })
                 else if (/^[0-9]*$/g.test(text)) {
-                  dispatch({ point: parseInt(text) })
+                  formDispatch({ point: parseInt(text) })
                 }
               }}
-              value={`${state.point}`}
+              value={`${formState.point}`}
             />
           </View>
 

@@ -2,7 +2,7 @@ import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import {
   View,
   ScrollView,
@@ -14,6 +14,7 @@ import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'
 import { RewardCard } from '../../components/RewardCard'
+import { RewardContext } from '../../lib/RewardContext'
 
 const styles = StyleSheet.create({
   rewardContainer: {
@@ -51,26 +52,10 @@ const styles = StyleSheet.create({
 
 type RewardStackProp = StackNavigationProp<RootStackParamList, 'Reward'>
 
-const rewards = [
-  {
-    name: 'Reward #1',
-    point: 20,
-  },
-  {
-    name: 'Reward #2',
-    point: 40,
-  },
-  {
-    name: 'Reward #3',
-    point: 60,
-  },
-  {
-    name: 'Reward #4',
-    point: 80,
-  },
-]
-
 const RewardList: FC = () => {
+  const {
+    state: { rewards },
+  } = useContext(RewardContext)
   return (
     <ScrollView style={[styles.scrollViewContainer]}>
       <View style={[styles.rewardListContainer]}>

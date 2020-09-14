@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
+import { RewardProvider } from './src/lib/RewardContext'
 import { Home } from './src/screens/Home'
 import { Reward } from './src/screens/Reward/Reward'
 import { RewardNew } from './src/screens/Reward/RewardNew'
@@ -23,18 +24,20 @@ const Stack = createStackNavigator<RootStackParamList>()
 
 const RewardTab = () => {
   return (
-    <Stack.Navigator initialRouteName="Reward">
-      <Stack.Screen
-        name="Reward"
-        component={Reward}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="RewardNew"
-        component={RewardNew}
-        options={{ title: 'Add New Reward' }}
-      />
-    </Stack.Navigator>
+    <RewardProvider>
+      <Stack.Navigator initialRouteName="Reward">
+        <Stack.Screen
+          name="Reward"
+          component={Reward}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RewardNew"
+          component={RewardNew}
+          options={{ title: 'Add New Reward' }}
+        />
+      </Stack.Navigator>
+    </RewardProvider>
   )
 }
 
