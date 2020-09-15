@@ -1,6 +1,11 @@
-import React, { FC } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import React, { FC, useContext } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import normalize from 'react-native-normalize'
+
+import { RootStackParamList } from '../../App'
+import { RewardContext } from '../lib/RewardContext'
 
 type Reward = {
   name: string
@@ -10,6 +15,8 @@ type Reward = {
 interface IRewardCardProps {
   reward: Reward
 }
+
+type RewardStackProp = StackNavigationProp<RootStackParamList, 'Reward'>
 
 const styles = StyleSheet.create({
   rewardCardContainer: {
@@ -38,12 +45,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: normalize(8),
   },
-  getRewardButton: {
+  rewardButton: {
     paddingVertical: normalize(6),
     paddingHorizontal: normalize(12),
     borderRadius: 8,
   },
-  getRewardText: {
+  rewardButtonText: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '700',
@@ -54,6 +61,9 @@ const styles = StyleSheet.create({
   unavailableButton: {
     backgroundColor: '#696969',
   },
+  editButton: {
+    backgroundColor: '#eed202',
+  },
 })
 
 const GetRewardButton: FC<IRewardCardProps> = ({ reward }) => {
@@ -61,29 +71,49 @@ const GetRewardButton: FC<IRewardCardProps> = ({ reward }) => {
 
   if (userPoint >= reward.point) {
     return (
-      <TouchableOpacity
-        style={[styles.getRewardButton, styles.availableButton]}
-      >
-        <Text style={[styles.getRewardText]}>แลก</Text>
+      <TouchableOpacity style={[styles.rewardButton, styles.availableButton]}>
+        <Text style={[styles.rewardButtonText]}>แลก</Text>
       </TouchableOpacity>
     )
   }
 
   return (
-    <View style={[styles.getRewardButton, styles.unavailableButton]}>
-      <Text style={[styles.getRewardText]}>แลก</Text>
+    <View style={[styles.rewardButton, styles.unavailableButton]}>
+      <Text style={[styles.rewardButtonText]}>แลก</Text>
     </View>
   )
 }
 
+const EditRewardButton: FC<IRewardCardProps> = ({ reward }) => {
+  const navigation = useNavigation<RewardStackProp>()
+
+  const onEditPress = () => {
+    navigation.push('RewardForm', { reward })
+  }
+
+  return (
+    <TouchableOpacity
+      style={[styles.rewardButton, styles.editButton]}
+      onPress={onEditPress}
+    >
+      <Text style={[styles.rewardButtonText]}>แก้ไข</Text>
+    </TouchableOpacity>
+  )
+}
+
 export const RewardCard: FC<IRewardCardProps> = ({ reward }) => {
+  const { state } = useContext(RewardContext)
   return (
     <View style={[styles.rewardCardContainer]}>
       <View style={[styles.rewardImage]} />
       <View style={[styles.detailContainer]}>
         <Text style={[styles.rewardName]}>{reward.name}</Text>
         <Text style={[styles.rewardPoint]}>{`${reward.point} points`}</Text>
-        <GetRewardButton {...{ reward }} />
+        {!state.editMode ? (
+          <GetRewardButton {...{ reward }} />
+        ) : (
+          <EditRewardButton {...{ reward }} />
+        )}
       </View>
     </View>
   )

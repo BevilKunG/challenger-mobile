@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, useEffect } from 'react'
 import {
   View,
   Text,
@@ -59,21 +59,52 @@ const styles = StyleSheet.create({
   submitButton: {
     color: '#147EFB',
   },
+  updateButton: {
+    color: '#eed202',
+  },
 })
 
-type RewardNewStackProp = StackNavigationProp<RootStackParamList, 'RewardForm'>
+type RewardFormStackProp = StackNavigationProp<RootStackParamList, 'RewardForm'>
+type RewardFormRouteProp = RouteProp<RootStackParamList, 'RewardForm'>
 
 const Form: FC = () => {
-  const navigation = useNavigation<RewardNewStackProp>()
+  const navigation = useNavigation<RewardFormStackProp>()
+  const route = useRoute<RewardFormRouteProp>()
 
-  const { dispatch: rewardsDispatch } = useContext(RewardContext)
+  const { state: rewardState, dispatch: rewardDispatch } = useContext(
+    RewardContext,
+  )
 
   const { state: formState, dispatch: formDispatch } = useContext(
     RewardFormContext,
   )
 
+  useEffect(() => {
+    if (route?.params?.reward) formDispatch(route.params.reward)
+  }, [route?.params?.reward])
+
   const resetForm = () => {
     formDispatch(initState)
+  }
+
+  const submitForm = (type: RewardActionTypes) => {
+    if (validateForm(formState)) {
+      const id = !route?.params?.reward
+        ? `${rewardState.rewards.length + 1}`
+        : route.params.reward.id
+
+      rewardDispatch({
+        type,
+        payload: {
+          reward: {
+            ...formState,
+            id,
+          },
+        },
+      })
+      resetForm()
+      navigation.goBack()
+    }
   }
 
   const onCancelPress = () => {
@@ -81,16 +112,9 @@ const Form: FC = () => {
     navigation.goBack()
   }
 
-  const onSubmitPress = () => {
-    if (validateForm(formState)) {
-      rewardsDispatch({
-        type: RewardActionTypes.AddReward,
-        payload: formState,
-      })
-      resetForm()
-      navigation.goBack()
-    }
-  }
+  const onSubmitPress = () => submitForm(RewardActionTypes.AddReward)
+
+  const onUpdatePress = () => submitForm(RewardActionTypes.UpdateReward)
 
   return (
     <KeyboardAvoidingView
@@ -130,11 +154,19 @@ const Form: FC = () => {
               <Text style={[styles.buttonText]}>Cancel</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={onSubmitPress}>
-              <Text style={[styles.buttonText, styles.submitButton]}>
-                Submit
-              </Text>
-            </TouchableOpacity>
+            {!rewardState.editMode ? (
+              <TouchableOpacity onPress={onSubmitPress}>
+                <Text style={[styles.buttonText, styles.submitButton]}>
+                  Submit
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={onUpdatePress}>
+                <Text style={[styles.buttonText, styles.updateButton]}>
+                  Update
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </TouchableWithoutFeedback>

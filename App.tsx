@@ -34,6 +34,7 @@ const RewardTab = () => {
         <Stack.Screen
           name="RewardForm"
           component={RewardForm}
+          initialParams={{ reward: null }}
           options={{ title: 'Add New Reward' }}
         />
       </Stack.Navigator>

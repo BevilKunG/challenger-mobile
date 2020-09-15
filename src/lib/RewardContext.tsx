@@ -5,6 +5,7 @@ interface IRewardProviderProps {
 }
 
 export type Reward = {
+  id: string
   name: string
   point: number
 }
@@ -41,22 +42,27 @@ interface IRewardContext {
 export const initState: IRewardState = {
   rewards: [
     {
+      id: '1',
       name: 'Reward #1',
       point: 20,
     },
     {
+      id: '2',
       name: 'Reward #2',
       point: 40,
     },
     {
+      id: '3',
       name: 'Reward #3',
       point: 60,
     },
     {
+      id: '4',
       name: 'Reward #4',
       point: 80,
     },
     {
+      id: '5',
       name: 'Reward #5',
       point: 120,
     },
@@ -71,21 +77,31 @@ export const RewardContext = createContext<IRewardContext>({
 
 export const reducer: Reducer<IRewardState, RewardAction> = (state, action) => {
   const { rewards } = state
+  const { reward, editMode } = action.payload
+
   switch (action.type) {
     case RewardActionTypes.AddReward:
-      if (action.payload.reward === undefined) break
+      if (reward === undefined) break
       return {
         ...state,
-        rewards: [...rewards, action.payload.reward],
+        rewards: [...rewards, reward],
+      }
+
+    case RewardActionTypes.UpdateReward:
+      if (reward === undefined) break
+      return {
+        ...state,
+        rewards: rewards.map((item) => (item.id === reward.id ? reward : item)),
       }
 
     case RewardActionTypes.SetEditMode:
-      if (action.payload.editMode === undefined) break
+      if (editMode === undefined) break
       return {
         ...state,
-        editMode: action.payload.editMode,
+        editMode,
       }
   }
+
   return state
 }
 

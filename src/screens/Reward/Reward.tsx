@@ -1,8 +1,8 @@
-import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faEdit, faBan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, useEffect } from 'react'
 import {
   View,
   ScrollView,
@@ -14,7 +14,7 @@ import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'
 import { RewardCard } from '../../components/RewardCard'
-import { RewardContext } from '../../lib/RewardContext'
+import { RewardActionTypes, RewardContext } from '../../lib/RewardContext'
 
 const styles = StyleSheet.create({
   rewardContainer: {
@@ -68,28 +68,69 @@ const RewardList: FC = () => {
 }
 
 const RewardHeader: FC = () => {
+  const { state, dispatch } = useContext(RewardContext)
   const navigation = useNavigation<RewardStackProp>()
+
   const onAddPress = () => {
     navigation.push('RewardForm')
+  }
+
+  const onEditPress = () => {
+    dispatch({
+      type: RewardActionTypes.SetEditMode,
+      payload: {
+        editMode: true,
+      },
+    })
+  }
+
+  const onCancelEditPress = () => {
+    dispatch({
+      type: RewardActionTypes.SetEditMode,
+      payload: {
+        editMode: false,
+      },
+    })
   }
 
   return (
     <View style={[styles.headerContainer]}>
       <Text style={[styles.headerBrand]}>Challenge</Text>
       <View style={[styles.headerMenu]}>
-        <TouchableOpacity onPress={onAddPress}>
+        {!state.editMode ? (
+          <TouchableOpacity onPress={onAddPress}>
+            <FontAwesomeIcon icon={faPlus} size={18} />
+          </TouchableOpacity>
+        ) : (
           <FontAwesomeIcon icon={faPlus} size={18} />
-        </TouchableOpacity>
+        )}
 
-        <TouchableOpacity>
-          <FontAwesomeIcon icon={faEdit} size={18} />
-        </TouchableOpacity>
+        {!state.editMode ? (
+          <TouchableOpacity onPress={onEditPress}>
+            <FontAwesomeIcon icon={faEdit} size={18} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={onCancelEditPress}>
+            <FontAwesomeIcon icon={faBan} size={18} />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   )
 }
 
 export const Reward: FC = () => {
+  const { dispatch } = useContext(RewardContext)
+
+  useEffect(() => {
+    dispatch({
+      type: RewardActionTypes.SetEditMode,
+      payload: {
+        editMode: false,
+      },
+    })
+  }, [])
+
   return (
     <View style={[styles.rewardContainer]}>
       <RewardHeader />

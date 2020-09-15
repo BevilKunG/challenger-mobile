@@ -4,6 +4,7 @@ describe('reward shared reducer testing', () => {
   it('add reward should be add reward in rewards state', () => {
     const { rewards } = initState
     const reward: Reward = {
+      id: '1',
       name: 'Reward #1',
       point: 100,
     }
