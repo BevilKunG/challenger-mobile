@@ -14,7 +14,7 @@ type EditMode = boolean
 
 interface IRewardState {
   rewards: Reward[]
-  editMode: boolean
+  editMode: EditMode
 }
 
 export enum RewardActionTypes {

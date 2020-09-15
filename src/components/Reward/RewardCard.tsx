@@ -6,8 +6,12 @@ import React, { FC, useContext } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import normalize from 'react-native-normalize'
 
-import { RootStackParamList } from '../../App'
-import { RewardActionTypes, RewardContext, Reward } from '../lib/RewardContext'
+import { RootStackParamList } from '../../../App'
+import {
+  RewardActionTypes,
+  RewardContext,
+  Reward,
+} from '../../lib/RewardContext'
 
 interface IRewardCardProps {
   reward: Reward
