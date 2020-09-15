@@ -1,9 +1,16 @@
-import React, { FC } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import React, { FC, useContext } from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import normalize from 'react-native-normalize'
 
+import { RootStackParamList } from '../../../App'
 import { ChallengeCard } from '../../components/Challenge/ChallengeCard'
 import { Header } from '../../components/Header'
+import {
+  ChallengeContext,
+  ChallengeActionTypes,
+} from '../../lib/ChallengeContext'
 
 const styles = StyleSheet.create({
   container: {
@@ -16,29 +23,14 @@ const styles = StyleSheet.create({
   },
 })
 
-const challenges = [
-  {
-    id: '1',
-    name: 'Challenge #1',
-    point: 1,
-  },
-  {
-    id: '2',
-    name: 'Challenge #2',
-    point: 1,
-  },
-  {
-    id: '3',
-    name: 'Challenge #3',
-    point: 1,
-  },
-]
+type ChallengeStackProp = StackNavigationProp<RootStackParamList, 'Challenge'>
 
 const ChallengeList: FC = () => {
+  const { state } = useContext(ChallengeContext)
   return (
     <ScrollView style={[styles.scrollViewContainer]}>
       <View>
-        {challenges.map((challenge) => (
+        {state.challenges.map((challenge) => (
           <ChallengeCard key={challenge.id} {...{ challenge }} />
         ))}
       </View>
@@ -47,16 +39,37 @@ const ChallengeList: FC = () => {
 }
 
 const ChallengeHeader: FC = () => {
-  const onAddPress = () => {}
+  const {
+    state: { editMode },
+    dispatch,
+  } = useContext(ChallengeContext)
 
-  const onEditPress = () => {}
+  const navigation = useNavigation<ChallengeStackProp>()
 
-  const onCancelEditPress = () => {}
+  const onAddPress = () => {
+    // navigation.push('ChallengeForm')
+  }
+
+  const onEditPress = () => {
+    dispatch({
+      type: ChallengeActionTypes.SetEditMode,
+      payload: {
+        editMode: true,
+      },
+    })
+  }
+
+  const onCancelEditPress = () => {
+    dispatch({
+      type: ChallengeActionTypes.SetEditMode,
+      payload: {
+        editMode: false,
+      },
+    })
+  }
 
   return (
-    <Header
-      {...{ onAddPress, onEditPress, onCancelEditPress, editMode: false }}
-    />
+    <Header {...{ onAddPress, onEditPress, onCancelEditPress, editMode }} />
   )
 }
 

@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
+import { ChallengeProvider } from './src/lib/ChallengeContext'
 import { RewardProvider } from './src/lib/RewardContext'
 import { Challenge } from './src/screens/Challenge/Challenge'
 import { Home } from './src/screens/Home'
@@ -47,13 +48,15 @@ const RewardTab = () => {
 
 const ChallengeTab = () => {
   return (
-    <Stack.Navigator initialRouteName="Challenge">
-      <Stack.Screen
-        name="Challenge"
-        component={Challenge}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+    <ChallengeProvider>
+      <Stack.Navigator initialRouteName="Challenge">
+        <Stack.Screen
+          name="Challenge"
+          component={Challenge}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </ChallengeProvider>
   )
 }
 

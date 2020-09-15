@@ -1,9 +1,11 @@
 import { faCheck, faMinus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import normalize from 'react-native-normalize'
+
+import { ChallengeContext } from '../../lib/ChallengeContext'
 
 interface IChallengeCardProps {
   challenge: any
@@ -100,7 +102,8 @@ const DeleteChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
 }
 
 export const ChallengeCard: FC<IChallengeCardProps> = ({ challenge }) => {
-  const editMode = false
+  const { state } = useContext(ChallengeContext)
+
   return (
     <View style={styles.container}>
       <View style={[styles.challengeCardContainer]}>
@@ -111,7 +114,7 @@ export const ChallengeCard: FC<IChallengeCardProps> = ({ challenge }) => {
           >{`${challenge.point} points`}</Text>
         </View>
         <View>
-          {!editMode ? (
+          {!state.editMode ? (
             <TouchableOpacity style={[styles.checkIcon]}>
               <FontAwesomeIcon icon={faCheck} color="#147EFB" />
             </TouchableOpacity>
@@ -121,7 +124,7 @@ export const ChallengeCard: FC<IChallengeCardProps> = ({ challenge }) => {
         </View>
       </View>
 
-      <DeleteChallengeButton {...{ challenge }} />
+      {/* <DeleteChallengeButton {...{ challenge }} /> */}
     </View>
   )
 }
