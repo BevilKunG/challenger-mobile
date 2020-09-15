@@ -102,7 +102,7 @@ const RewardHeader: FC = () => {
             <FontAwesomeIcon icon={faPlus} size={18} />
           </TouchableOpacity>
         ) : (
-          <FontAwesomeIcon icon={faPlus} size={18} />
+          <FontAwesomeIcon icon={faPlus} size={18} color="#d3d3d3" />
         )}
 
         {!state.editMode ? (
