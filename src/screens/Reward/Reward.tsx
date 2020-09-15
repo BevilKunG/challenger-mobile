@@ -13,11 +13,12 @@ import {
 import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'
-import { RewardCard } from '../../components/RewardCard'
+import { Header } from '../../components/Header'
+import { RewardCard } from '../../components/Reward/RewardCard'
 import { RewardActionTypes, RewardContext } from '../../lib/RewardContext'
 
 const styles = StyleSheet.create({
-  rewardContainer: {
+  container: {
     flex: 1,
     paddingVertical: normalize(36),
   },
@@ -71,6 +72,7 @@ const RewardHeader: FC = () => {
   const { state, dispatch } = useContext(RewardContext)
   const navigation = useNavigation<RewardStackProp>()
 
+  const { editMode } = state
   const onAddPress = () => {
     navigation.push('RewardForm')
   }
@@ -94,28 +96,7 @@ const RewardHeader: FC = () => {
   }
 
   return (
-    <View style={[styles.headerContainer]}>
-      <Text style={[styles.headerBrand]}>Challenge</Text>
-      <View style={[styles.headerMenu]}>
-        {!state.editMode ? (
-          <TouchableOpacity onPress={onAddPress}>
-            <FontAwesomeIcon icon={faPlus} size={18} />
-          </TouchableOpacity>
-        ) : (
-          <FontAwesomeIcon icon={faPlus} size={18} color="#d3d3d3" />
-        )}
-
-        {!state.editMode ? (
-          <TouchableOpacity onPress={onEditPress}>
-            <FontAwesomeIcon icon={faEdit} size={18} />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity onPress={onCancelEditPress}>
-            <FontAwesomeIcon icon={faBan} size={18} />
-          </TouchableOpacity>
-        )}
-      </View>
-    </View>
+    <Header {...{ onAddPress, onEditPress, onCancelEditPress, editMode }} />
   )
 }
 
@@ -132,7 +113,7 @@ export const Reward: FC = () => {
   }, [])
 
   return (
-    <View style={[styles.rewardContainer]}>
+    <View style={[styles.container]}>
       <RewardHeader />
       <RewardList />
     </View>
