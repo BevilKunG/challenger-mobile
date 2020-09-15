@@ -11,7 +11,9 @@ describe('reward shared reducer testing', () => {
     expect(
       reducer(initState, {
         type: RewardActionTypes.AddReward,
-        payload: reward,
+        payload: {
+          reward,
+        },
       }),
     ).toEqual({
       ...initState,

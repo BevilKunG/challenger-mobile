@@ -9,19 +9,28 @@ export type Reward = {
   point: number
 }
 
+type EditMode = boolean
+
 interface IRewardState {
   rewards: Reward[]
+  editMode: boolean
 }
 
 export enum RewardActionTypes {
   AddReward = 'ADD_REWARD',
   UpdateReward = 'UPDATE_REWARD',
   DeleteReward = 'DELETE_REWARD',
+  SetEditMode = 'SET_EDIT_MODE',
+}
+
+type RewardActionPayload = {
+  reward: Reward
+  editMode: EditMode
 }
 
 type RewardAction = {
   type: RewardActionTypes
-  payload: Reward
+  payload: Partial<RewardActionPayload>
 }
 
 interface IRewardContext {
@@ -52,6 +61,7 @@ export const initState: IRewardState = {
       point: 120,
     },
   ],
+  editMode: false,
 }
 
 export const RewardContext = createContext<IRewardContext>({
@@ -63,13 +73,20 @@ export const reducer: Reducer<IRewardState, RewardAction> = (state, action) => {
   const { rewards } = state
   switch (action.type) {
     case RewardActionTypes.AddReward:
+      if (action.payload.reward === undefined) break
       return {
         ...state,
-        rewards: [...rewards, action.payload],
+        rewards: [...rewards, action.payload.reward],
       }
-    default:
-      return state
+
+    case RewardActionTypes.SetEditMode:
+      if (action.payload.editMode === undefined) break
+      return {
+        ...state,
+        editMode: action.payload.editMode,
+      }
   }
+  return state
 }
 
 export const RewardProvider: FC<IRewardProviderProps> = ({ children }) => {
