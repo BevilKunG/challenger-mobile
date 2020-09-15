@@ -20,4 +20,30 @@ describe('reward shared reducer testing', () => {
       rewards: [...rewards, reward],
     })
   })
+
+  it('edit mode state should be equal edit mode in action payload', () => {
+    expect(
+      reducer(initState, {
+        type: RewardActionTypes.SetEditMode,
+        payload: {
+          editMode: true,
+        },
+      }),
+    ).toEqual({
+      ...initState,
+      editMode: true,
+    })
+
+    expect(
+      reducer(initState, {
+        type: RewardActionTypes.SetEditMode,
+        payload: {
+          editMode: false,
+        },
+      }),
+    ).toEqual({
+      ...initState,
+      editMode: false,
+    })
+  })
 })
