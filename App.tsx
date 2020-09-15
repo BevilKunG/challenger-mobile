@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
 import { RewardProvider } from './src/lib/RewardContext'
+import { Challenge } from './src/screens/Challenge/Challenge'
 import { Home } from './src/screens/Home'
 import { Reward } from './src/screens/Reward/Reward'
 import { RewardForm } from './src/screens/Reward/RewardForm'
@@ -12,11 +13,13 @@ import { RewardForm } from './src/screens/Reward/RewardForm'
 export type RootBottomTabParamList = {
   Home: any
   Reward: any
+  Challenge: any
 }
 
 export type RootStackParamList = {
   Reward: any
   RewardForm: any
+  Challenge: any
 }
 
 const Tab = createBottomTabNavigator<RootBottomTabParamList>()
@@ -42,11 +45,24 @@ const RewardTab = () => {
   )
 }
 
+const ChallengeTab = () => {
+  return (
+    <Stack.Navigator initialRouteName="Challenge">
+      <Stack.Screen
+        name="Challenge"
+        component={Challenge}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  )
+}
+
 export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Home">
         <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Challenge" component={ChallengeTab} />
         <Tab.Screen name="Reward" component={RewardTab} />
       </Tab.Navigator>
     </NavigationContainer>
