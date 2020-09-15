@@ -29,7 +29,7 @@ interface IRewardContext {
   dispatch: Dispatch<RewardAction>
 }
 
-const initState: IRewardState = {
+export const initState: IRewardState = {
   rewards: [
     {
       name: 'Reward #1',
@@ -59,7 +59,7 @@ export const RewardContext = createContext<IRewardContext>({
   dispatch: () => null,
 })
 
-const reducer: Reducer<IRewardState, RewardAction> = (state, action) => {
+export const reducer: Reducer<IRewardState, RewardAction> = (state, action) => {
   const { rewards } = state
   switch (action.type) {
     case RewardActionTypes.AddReward:
