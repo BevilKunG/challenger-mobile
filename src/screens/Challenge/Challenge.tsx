@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import normalize from 'react-native-normalize'
 
+import { ChallengeCard } from '../../components/Challenge/ChallengeCard'
 import { Header } from '../../components/Header'
 
 const styles = StyleSheet.create({
@@ -12,11 +13,6 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     flex: 1,
     paddingHorizontal: normalize(24),
-  },
-  challengeListContainer: {
-    // flexDirection: 'row',
-    // flexWrap: 'wrap',
-    // justifyContent: 'space-around',
   },
 })
 
@@ -41,10 +37,10 @@ const challenges = [
 const ChallengeList: FC = () => {
   return (
     <ScrollView style={[styles.scrollViewContainer]}>
-      <View style={[styles.challengeListContainer]}>
-        {/* {challenges.map((challenge) => (
+      <View>
+        {challenges.map((challenge) => (
           <ChallengeCard key={challenge.id} {...{ challenge }} />
-        ))} */}
+        ))}
       </View>
     </ScrollView>
   )

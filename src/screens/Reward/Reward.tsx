@@ -14,7 +14,7 @@ import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'
 import { Header } from '../../components/Header'
-import { RewardCard } from '../../components/RewardCard'
+import { RewardCard } from '../../components/Reward/RewardCard'
 import { RewardActionTypes, RewardContext } from '../../lib/RewardContext'
 
 const styles = StyleSheet.create({
