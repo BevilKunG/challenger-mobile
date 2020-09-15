@@ -61,9 +61,9 @@ const styles = StyleSheet.create({
   },
 })
 
-type RewardNewStackProp = StackNavigationProp<RootStackParamList, 'RewardNew'>
+type RewardNewStackProp = StackNavigationProp<RootStackParamList, 'RewardForm'>
 
-const RewardForm: FC = () => {
+const Form: FC = () => {
   const navigation = useNavigation<RewardNewStackProp>()
 
   const { dispatch: rewardsDispatch } = useContext(RewardContext)
@@ -142,11 +142,11 @@ const RewardForm: FC = () => {
   )
 }
 
-export const RewardNew: FC = () => {
+export const RewardForm: FC = () => {
   return (
     <View style={[styles.container]}>
       <RewardFormProvider>
-        <RewardForm />
+        <Form />
       </RewardFormProvider>
     </View>
   )

@@ -7,16 +7,16 @@ import React from 'react'
 import { RewardProvider } from './src/lib/RewardContext'
 import { Home } from './src/screens/Home'
 import { Reward } from './src/screens/Reward/Reward'
-import { RewardNew } from './src/screens/Reward/RewardNew'
+import { RewardForm } from './src/screens/Reward/RewardForm'
 
 export type RootBottomTabParamList = {
-  HomeTab: any
-  RewardTab: any
+  Home: any
+  Reward: any
 }
 
 export type RootStackParamList = {
   Reward: any
-  RewardNew: any
+  RewardForm: any
 }
 
 const Tab = createBottomTabNavigator<RootBottomTabParamList>()
@@ -32,8 +32,8 @@ const RewardTab = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="RewardNew"
-          component={RewardNew}
+          name="RewardForm"
+          component={RewardForm}
           options={{ title: 'Add New Reward' }}
         />
       </Stack.Navigator>
@@ -44,9 +44,9 @@ const RewardTab = () => {
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="HomeTab">
-        <Tab.Screen name="HomeTab" component={Home} />
-        <Tab.Screen name="RewardTab" component={RewardTab} />
+      <Tab.Navigator initialRouteName="Home">
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Reward" component={RewardTab} />
       </Tab.Navigator>
     </NavigationContainer>
   )

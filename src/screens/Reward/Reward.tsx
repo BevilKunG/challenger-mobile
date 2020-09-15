@@ -70,7 +70,7 @@ const RewardList: FC = () => {
 const RewardHeader: FC = () => {
   const navigation = useNavigation<RewardStackProp>()
   const onAddPress = () => {
-    navigation.push('RewardNew')
+    navigation.push('RewardForm')
   }
 
   return (
