@@ -60,7 +60,7 @@ const RewardList: FC = () => {
     <ScrollView style={[styles.scrollViewContainer]}>
       <View style={[styles.rewardListContainer]}>
         {rewards.map((reward) => (
-          <RewardCard key={reward.name} {...{ reward }} />
+          <RewardCard key={reward.id} {...{ reward }} />
         ))}
       </View>
     </ScrollView>

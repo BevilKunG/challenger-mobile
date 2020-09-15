@@ -94,6 +94,13 @@ export const reducer: Reducer<IRewardState, RewardAction> = (state, action) => {
         rewards: rewards.map((item) => (item.id === reward.id ? reward : item)),
       }
 
+    case RewardActionTypes.DeleteReward:
+      if (reward === undefined) break
+      return {
+        ...state,
+        rewards: rewards.filter((item) => item.id !== reward.id),
+      }
+
     case RewardActionTypes.SetEditMode:
       if (editMode === undefined) break
       return {
