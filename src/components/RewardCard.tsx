@@ -1,20 +1,28 @@
-import React, { FC } from 'react'
+import { faMinus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import React, { FC, useContext } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import normalize from 'react-native-normalize'
 
-type Reward = {
-  name: string
-  point: number
-}
+import { RootStackParamList } from '../../App'
+import { RewardActionTypes, RewardContext, Reward } from '../lib/RewardContext'
 
 interface IRewardCardProps {
   reward: Reward
 }
 
+type RewardStackProp = StackNavigationProp<RootStackParamList, 'Reward'>
+
 const styles = StyleSheet.create({
-  rewardCardContainer: {
-    width: '45%',
+  container: {
+    width: '50%',
+    paddingVertical: normalize(10),
+    paddingHorizontal: normalize(5),
     marginVertical: normalize(10),
+  },
+  rewardCardContainer: {
     backgroundColor: '#ffffff',
     shadowColor: '#000000',
     shadowOpacity: 0.1,
@@ -38,12 +46,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: normalize(8),
   },
-  getRewardButton: {
+  rewardButton: {
     paddingVertical: normalize(6),
     paddingHorizontal: normalize(12),
     borderRadius: 8,
   },
-  getRewardText: {
+  rewardButtonText: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '700',
@@ -54,6 +62,20 @@ const styles = StyleSheet.create({
   unavailableButton: {
     backgroundColor: '#696969',
   },
+  editButton: {
+    backgroundColor: '#eed202',
+  },
+  deleteButton: {
+    backgroundColor: '#f32013',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    borderRadius: 9999,
+    padding: normalize(6),
+    marginTop: normalize(1),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 })
 
 const GetRewardButton: FC<IRewardCardProps> = ({ reward }) => {
@@ -61,30 +83,75 @@ const GetRewardButton: FC<IRewardCardProps> = ({ reward }) => {
 
   if (userPoint >= reward.point) {
     return (
-      <TouchableOpacity
-        style={[styles.getRewardButton, styles.availableButton]}
-      >
-        <Text style={[styles.getRewardText]}>แลก</Text>
+      <TouchableOpacity style={[styles.rewardButton, styles.availableButton]}>
+        <Text style={[styles.rewardButtonText]}>แลก</Text>
       </TouchableOpacity>
     )
   }
 
   return (
-    <View style={[styles.getRewardButton, styles.unavailableButton]}>
-      <Text style={[styles.getRewardText]}>แลก</Text>
+    <View style={[styles.rewardButton, styles.unavailableButton]}>
+      <Text style={[styles.rewardButtonText]}>แลก</Text>
     </View>
   )
 }
 
-export const RewardCard: FC<IRewardCardProps> = ({ reward }) => {
+const EditRewardButton: FC<IRewardCardProps> = ({ reward }) => {
+  const navigation = useNavigation<RewardStackProp>()
+
+  const onEditPress = () => {
+    navigation.push('RewardForm', { reward })
+  }
+
   return (
-    <View style={[styles.rewardCardContainer]}>
-      <View style={[styles.rewardImage]} />
-      <View style={[styles.detailContainer]}>
-        <Text style={[styles.rewardName]}>{reward.name}</Text>
-        <Text style={[styles.rewardPoint]}>{`${reward.point} points`}</Text>
-        <GetRewardButton {...{ reward }} />
+    <TouchableOpacity
+      style={[styles.rewardButton, styles.editButton]}
+      onPress={onEditPress}
+    >
+      <Text style={[styles.rewardButtonText]}>แก้ไข</Text>
+    </TouchableOpacity>
+  )
+}
+
+const DeleteRewardButton: FC<IRewardCardProps> = ({ reward }) => {
+  const { state, dispatch } = useContext(RewardContext)
+
+  const onDeletePress = () => {
+    dispatch({
+      type: RewardActionTypes.DeleteReward,
+      payload: {
+        reward,
+      },
+    })
+  }
+
+  if (!state.editMode) return null
+
+  return (
+    <TouchableOpacity style={[styles.deleteButton]} onPress={onDeletePress}>
+      <FontAwesomeIcon icon={faMinus} color="#ffffff" size={12} />
+    </TouchableOpacity>
+  )
+}
+
+export const RewardCard: FC<IRewardCardProps> = ({ reward }) => {
+  const { state } = useContext(RewardContext)
+  return (
+    <View style={styles.container}>
+      <View style={[styles.rewardCardContainer]}>
+        <View style={[styles.rewardImage]} />
+        <View style={[styles.detailContainer]}>
+          <Text style={[styles.rewardName]}>{reward.name}</Text>
+          <Text style={[styles.rewardPoint]}>{`${reward.point} points`}</Text>
+          {!state.editMode ? (
+            <GetRewardButton {...{ reward }} />
+          ) : (
+            <EditRewardButton {...{ reward }} />
+          )}
+        </View>
       </View>
+
+      <DeleteRewardButton {...{ reward }} />
     </View>
   )
 }
