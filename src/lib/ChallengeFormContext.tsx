@@ -26,10 +26,10 @@ export const ChallengeFormContext = createContext<IChallengeFormContext>({
   dispatch: () => null,
 })
 
-const reducer: Reducer<IChallengeFormState, Partial<IChallengeFormState>> = (
-  prev,
-  current,
-) => {
+export const reducer: Reducer<
+  IChallengeFormState,
+  Partial<IChallengeFormState>
+> = (prev, current) => {
   return {
     ...prev,
     ...current,
