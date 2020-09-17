@@ -76,6 +76,15 @@ const reducer: Reducer<IChallengeState, ChallengeAction> = (state, action) => {
         challenges: [...challenges, challenge],
       }
 
+    case ChallengeActionTypes.UpdateChallenge:
+      if (challenge === undefined) break
+      return {
+        ...state,
+        challenges: challenges.map((item) =>
+          item.id === challenge.id ? challenge : item,
+        ),
+      }
+
     case ChallengeActionTypes.SetEditMode:
       if (editMode === undefined) break
       return {

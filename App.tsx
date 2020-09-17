@@ -60,6 +60,7 @@ const ChallengeTab = () => {
         <Stack.Screen
           name="ChallengeForm"
           component={ChallengeForm}
+          initialParams={{ challenge: null }}
           options={{ title: 'Challenge Form' }}
         />
       </Stack.Navigator>
