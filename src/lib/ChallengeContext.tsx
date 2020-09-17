@@ -66,8 +66,16 @@ export const ChallengeContext = createContext<IChallengeContext>({
 })
 
 const reducer: Reducer<IChallengeState, ChallengeAction> = (state, action) => {
+  const { challenges } = state
   const { challenge, editMode } = action.payload
   switch (action.type) {
+    case ChallengeActionTypes.AddChallenge:
+      if (challenge === undefined) break
+      return {
+        ...state,
+        challenges: [...challenges, challenge],
+      }
+
     case ChallengeActionTypes.SetEditMode:
       if (editMode === undefined) break
       return {

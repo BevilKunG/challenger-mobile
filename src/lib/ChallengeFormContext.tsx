@@ -14,6 +14,8 @@ interface IChallengeFormProviderProps {
   children: any
 }
 
+type ValidateForm = (state: IChallengeFormState) => boolean
+
 export const initState: IChallengeFormState = {
   name: '',
   point: 0,
@@ -44,4 +46,12 @@ export const ChallengeFormProvider: FC<IChallengeFormProviderProps> = ({
       {children}
     </ChallengeFormContext.Provider>
   )
+}
+
+export const validateForm: ValidateForm = ({ name, point }) => {
+  const nameNotEmpty = /^.+$/g.test(name)
+  const pointOnlyNumber = !isNaN(point)
+  const pointGreaterThanZero = point > 0
+
+  return nameNotEmpty && pointOnlyNumber && pointGreaterThanZero
 }

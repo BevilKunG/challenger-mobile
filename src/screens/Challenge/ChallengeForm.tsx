@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, useEffect } from 'react'
 import {
   StyleSheet,
   View,
@@ -23,6 +23,7 @@ import {
   ChallengeFormContext,
   ChallengeFormProvider,
   initState,
+  validateForm,
 } from '../../lib/ChallengeFormContext'
 
 const styles = StyleSheet.create({
@@ -71,18 +72,45 @@ type ChallengeFormStackProp = StackNavigationProp<
   'ChallengeForm'
 >
 
+type ChallengeFormRouteProp = RouteProp<RootStackParamList, 'ChallengeForm'>
+
 const Form: FC = () => {
   const navigation = useNavigation<ChallengeFormStackProp>()
-  const { state: challengeState } = useContext(ChallengeContext)
+  const route = useRoute<ChallengeFormRouteProp>()
+  const { state: challengeState, dispatch: challengeDispatch } = useContext(
+    ChallengeContext,
+  )
   const { state: formState, dispatch: formDispatch } = useContext(
     ChallengeFormContext,
   )
+
+  useEffect(() => {
+    if (route?.params?.challenge) formDispatch(route.params.challenge)
+  }, [route?.params?.challenge])
 
   const resetForm = () => {
     formDispatch(initState)
   }
 
-  const submitForm = (type: ChallengeActionTypes) => {}
+  const submitForm = (type: ChallengeActionTypes) => {
+    if (validateForm(formState)) {
+      const id = !route?.params?.challenge
+        ? `${challengeState.challenges.length + 1}`
+        : route.params.challenge.id
+
+      challengeDispatch({
+        type,
+        payload: {
+          challenge: {
+            ...formState,
+            id,
+          },
+        },
+      })
+      resetForm()
+      navigation.goBack()
+    }
+  }
 
   const onCancelPress = () => {
     resetForm()
