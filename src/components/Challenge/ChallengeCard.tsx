@@ -1,15 +1,22 @@
 import { faCheck, faMinus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FC, useContext } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import normalize from 'react-native-normalize'
 
-import { ChallengeContext } from '../../lib/ChallengeContext'
+import { RootStackParamList } from '../../../App'
+import {
+  ChallengeActionTypes,
+  ChallengeContext,
+} from '../../lib/ChallengeContext'
 
 interface IChallengeCardProps {
   challenge: any
 }
+
+type ChallengeStackProp = StackNavigationProp<RootStackParamList, 'Challenge'>
 
 const styles = StyleSheet.create({
   container: {
@@ -79,7 +86,12 @@ const styles = StyleSheet.create({
 })
 
 const EditChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
-  const onEditPress = () => {}
+  const navigation = useNavigation<ChallengeStackProp>()
+  const onEditPress = () => {
+    navigation.push('ChallengeForm', {
+      challenge,
+    })
+  }
 
   return (
     <TouchableOpacity
@@ -92,7 +104,17 @@ const EditChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
 }
 
 const DeleteChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
-  const onDeletePress = () => {}
+  const { dispatch, state } = useContext(ChallengeContext)
+  const onDeletePress = () => {
+    dispatch({
+      type: ChallengeActionTypes.DeleteChallenge,
+      payload: {
+        challenge,
+      },
+    })
+  }
+
+  if (!state.editMode) return null
 
   return (
     <TouchableOpacity style={[styles.deleteButton]} onPress={onDeletePress}>
@@ -124,7 +146,7 @@ export const ChallengeCard: FC<IChallengeCardProps> = ({ challenge }) => {
         </View>
       </View>
 
-      {/* <DeleteChallengeButton {...{ challenge }} /> */}
+      <DeleteChallengeButton {...{ challenge }} />
     </View>
   )
 }

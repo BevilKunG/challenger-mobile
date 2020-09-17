@@ -47,7 +47,7 @@ const ChallengeHeader: FC = () => {
   const navigation = useNavigation<ChallengeStackProp>()
 
   const onAddPress = () => {
-    // navigation.push('ChallengeForm')
+    navigation.push('ChallengeForm')
   }
 
   const onEditPress = () => {
