@@ -7,6 +7,7 @@ import React from 'react'
 import { ChallengeProvider } from './src/lib/ChallengeContext'
 import { RewardProvider } from './src/lib/RewardContext'
 import { Challenge } from './src/screens/Challenge/Challenge'
+import { ChallengeForm } from './src/screens/Challenge/ChallengeForm'
 import { Home } from './src/screens/Home'
 import { Reward } from './src/screens/Reward/Reward'
 import { RewardForm } from './src/screens/Reward/RewardForm'
@@ -21,6 +22,7 @@ export type RootStackParamList = {
   Reward: any
   RewardForm: any
   Challenge: any
+  ChallengeForm: any
 }
 
 const Tab = createBottomTabNavigator<RootBottomTabParamList>()
@@ -39,7 +41,7 @@ const RewardTab = () => {
           name="RewardForm"
           component={RewardForm}
           initialParams={{ reward: null }}
-          options={{ title: 'Add New Reward' }}
+          options={{ title: 'Reward Form' }}
         />
       </Stack.Navigator>
     </RewardProvider>
@@ -54,6 +56,12 @@ const ChallengeTab = () => {
           name="Challenge"
           component={Challenge}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ChallengeForm"
+          component={ChallengeForm}
+          initialParams={{ challenge: null }}
+          options={{ title: 'Challenge Form' }}
         />
       </Stack.Navigator>
     </ChallengeProvider>
