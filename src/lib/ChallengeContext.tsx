@@ -85,6 +85,13 @@ const reducer: Reducer<IChallengeState, ChallengeAction> = (state, action) => {
         ),
       }
 
+    case ChallengeActionTypes.DeleteChallenge:
+      if (challenge === undefined) break
+      return {
+        ...state,
+        challenges: challenges.filter((item) => item.id !== challenge.id),
+      }
+
     case ChallengeActionTypes.SetEditMode:
       if (editMode === undefined) break
       return {

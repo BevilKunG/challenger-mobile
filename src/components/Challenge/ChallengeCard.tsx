@@ -3,12 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FC, useContext } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'
-import { ChallengeContext } from '../../lib/ChallengeContext'
+import {
+  ChallengeActionTypes,
+  ChallengeContext,
+} from '../../lib/ChallengeContext'
 
 interface IChallengeCardProps {
   challenge: any
@@ -102,7 +104,17 @@ const EditChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
 }
 
 const DeleteChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
-  const onDeletePress = () => {}
+  const { dispatch, state } = useContext(ChallengeContext)
+  const onDeletePress = () => {
+    dispatch({
+      type: ChallengeActionTypes.DeleteChallenge,
+      payload: {
+        challenge,
+      },
+    })
+  }
+
+  if (!state.editMode) return null
 
   return (
     <TouchableOpacity style={[styles.deleteButton]} onPress={onDeletePress}>
@@ -134,7 +146,7 @@ export const ChallengeCard: FC<IChallengeCardProps> = ({ challenge }) => {
         </View>
       </View>
 
-      {/* <DeleteChallengeButton {...{ challenge }} /> */}
+      <DeleteChallengeButton {...{ challenge }} />
     </View>
   )
 }

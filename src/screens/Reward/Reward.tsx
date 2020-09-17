@@ -31,24 +31,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
   },
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: normalize(22),
-    paddingVertical: normalize(16),
-  },
-  headerBrand: {
-    flex: 4,
-    fontSize: 24,
-    fontWeight: '700',
-  },
-  headerMenu: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
 })
 
 type RewardStackProp = StackNavigationProp<RootStackParamList, 'Reward'>
