@@ -1,6 +1,6 @@
 import React, { FC, createContext, useReducer, Reducer, Dispatch } from 'react'
 
-type Challenge = {
+export type Challenge = {
   id: string
   name: string
   point: number
@@ -39,7 +39,7 @@ interface IChallengeProviderProps {
   children: any
 }
 
-const initState: IChallengeState = {
+export const initState: IChallengeState = {
   challenges: [
     {
       id: '1',
@@ -65,7 +65,10 @@ export const ChallengeContext = createContext<IChallengeContext>({
   dispatch: () => null,
 })
 
-const reducer: Reducer<IChallengeState, ChallengeAction> = (state, action) => {
+export const reducer: Reducer<IChallengeState, ChallengeAction> = (
+  state,
+  action,
+) => {
   const { challenges } = state
   const { challenge, editMode } = action.payload
   switch (action.type) {
