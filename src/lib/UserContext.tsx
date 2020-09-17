@@ -35,7 +35,7 @@ interface IUserContext {
   dispatch: Dispatch<UserAction>
 }
 
-const initState: IUserState = {
+export const initState: IUserState = {
   user: {
     id: 'uid_1',
     name: 'user_1',
@@ -48,7 +48,7 @@ export const UserContext = createContext<IUserContext>({
   dispatch: () => null,
 })
 
-const reducer: Reducer<IUserState, UserAction> = (state, action) => {
+export const reducer: Reducer<IUserState, UserAction> = (state, action) => {
   const { user, point } = action.payload
   switch (action.type) {
     case UserActionTypes.SetUser:
