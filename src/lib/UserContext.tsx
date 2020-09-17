@@ -16,15 +16,18 @@ interface IUserProviderProps {
 
 export enum UserActionTypes {
   SetUser = 'SET_USER',
+  IncresePoint = 'INCREASE_POINT',
+  DecreasePoint = 'DECREASE_POINT',
 }
 
 type UserActionPayload = {
   user: User | null
+  point: number
 }
 
 type UserAction = {
   type: UserActionTypes
-  payload: UserActionPayload
+  payload: Partial<UserActionPayload>
 }
 
 interface IUserContext {
@@ -46,17 +49,36 @@ export const UserContext = createContext<IUserContext>({
 })
 
 const reducer: Reducer<IUserState, UserAction> = (state, action) => {
-  const { user } = action.payload
+  const { user, point } = action.payload
   switch (action.type) {
     case UserActionTypes.SetUser:
+      if (user === undefined) break
       return {
         ...state,
         user,
       }
 
-    default:
-      return state
+    case UserActionTypes.IncresePoint:
+      if (point === undefined || !state.user) break
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          point: state.user.point + point,
+        },
+      }
+
+    case UserActionTypes.DecreasePoint:
+      if (point === undefined || !state.user) break
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          point: state.user.point - point,
+        },
+      }
   }
+  return state
 }
 
 export const UserProvider: FC<IUserProviderProps> = ({ children }) => {

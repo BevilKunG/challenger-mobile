@@ -11,6 +11,7 @@ import {
   ChallengeActionTypes,
   ChallengeContext,
 } from '../../lib/ChallengeContext'
+import { UserActionTypes, UserContext } from '../../lib/UserContext'
 
 interface IChallengeCardProps {
   challenge: any
@@ -85,6 +86,23 @@ const styles = StyleSheet.create({
   },
 })
 
+const DoneChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
+  const { dispatch } = useContext(UserContext)
+  const onDonePress = () => {
+    dispatch({
+      type: UserActionTypes.IncresePoint,
+      payload: {
+        point: challenge.point,
+      },
+    })
+  }
+  return (
+    <TouchableOpacity style={[styles.checkIcon]} onPress={onDonePress}>
+      <FontAwesomeIcon icon={faCheck} color="#147EFB" />
+    </TouchableOpacity>
+  )
+}
+
 const EditChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
   const navigation = useNavigation<ChallengeStackProp>()
   const onEditPress = () => {
@@ -137,9 +155,7 @@ export const ChallengeCard: FC<IChallengeCardProps> = ({ challenge }) => {
         </View>
         <View>
           {!state.editMode ? (
-            <TouchableOpacity style={[styles.checkIcon]}>
-              <FontAwesomeIcon icon={faCheck} color="#147EFB" />
-            </TouchableOpacity>
+            <DoneChallengeButton {...{ challenge }} />
           ) : (
             <EditChallengeButton {...{ challenge }} />
           )}
