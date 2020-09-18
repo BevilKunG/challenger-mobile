@@ -12,6 +12,7 @@ import {
   RewardContext,
   Reward,
 } from '../../lib/RewardContext'
+import { UserContext, UserActionTypes } from '../../lib/UserContext'
 
 interface IRewardCardProps {
   reward: Reward
@@ -83,11 +84,22 @@ const styles = StyleSheet.create({
 })
 
 const GetRewardButton: FC<IRewardCardProps> = ({ reward }) => {
-  const userPoint = 60
+  const { state, dispatch } = useContext(UserContext)
 
-  if (userPoint >= reward.point) {
+  const onGetPress = () => {
+    dispatch({
+      type: UserActionTypes.DecreasePoint,
+      payload: {
+        point: reward.point,
+      },
+    })
+  }
+  if (state.user && state.user.point >= reward.point) {
     return (
-      <TouchableOpacity style={[styles.rewardButton, styles.availableButton]}>
+      <TouchableOpacity
+        style={[styles.rewardButton, styles.availableButton]}
+        onPress={onGetPress}
+      >
         <Text style={[styles.rewardButtonText]}>แลก</Text>
       </TouchableOpacity>
     )
