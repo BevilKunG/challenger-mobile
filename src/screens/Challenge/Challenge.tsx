@@ -12,6 +12,7 @@ import {
   ChallengeContext,
   ChallengeActionTypes,
 } from '../../lib/ChallengeContext'
+import { ConfirmChallengeProvider } from '../../lib/ConfirmChallengeContext'
 
 const styles = StyleSheet.create({
   container: {
@@ -75,19 +76,13 @@ const ChallengeHeader: FC = () => {
 }
 
 export const Challenge: FC = () => {
-  const confirmProps = {
-    modalVisible: true,
-    challenge: {
-      id: '1',
-      name: 'Challenge #1',
-      point: 100,
-    },
-  }
   return (
     <View style={[styles.container]}>
       <ChallengeHeader />
-      <ChallengeList />
-      <ConfirmChallengeModal {...confirmProps} />
+      <ConfirmChallengeProvider>
+        <ChallengeList />
+        <ConfirmChallengeModal />
+      </ConfirmChallengeProvider>
     </View>
   )
 }

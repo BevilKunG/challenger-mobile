@@ -11,7 +11,10 @@ import {
   ChallengeActionTypes,
   ChallengeContext,
 } from '../../lib/ChallengeContext'
-import { UserActionTypes, UserContext } from '../../lib/UserContext'
+import {
+  ConfirmChallengeContext,
+  ConfirmChallengeActionTypes,
+} from '../../lib/ConfirmChallengeContext'
 
 interface IChallengeCardProps {
   challenge: any
@@ -87,12 +90,12 @@ const styles = StyleSheet.create({
 })
 
 const DoneChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
-  const { dispatch } = useContext(UserContext)
+  const { dispatch } = useContext(ConfirmChallengeContext)
   const onDonePress = () => {
     dispatch({
-      type: UserActionTypes.IncresePoint,
+      type: ConfirmChallengeActionTypes.ShowModal,
       payload: {
-        point: challenge.point,
+        challenge,
       },
     })
   }

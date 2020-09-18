@@ -1,8 +1,12 @@
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import { StyleSheet, Modal, View, Text, TouchableOpacity } from 'react-native'
 import normalize from 'react-native-normalize'
 
-import { Challenge } from '../../lib/ChallengeContext'
+import {
+  ConfirmChallengeActionTypes,
+  ConfirmChallengeContext,
+} from '../../lib/ConfirmChallengeContext'
+import { UserActionTypes, UserContext } from '../../lib/UserContext'
 
 const styles = StyleSheet.create({
   container: {
@@ -56,24 +60,40 @@ const styles = StyleSheet.create({
   },
 })
 
-interface IConfirmModalProps {
-  modalVisible: boolean
-  challenge: Challenge
-}
-
-const TransparentBackground: FC<Pick<IConfirmModalProps, 'modalVisible'>> = ({
-  modalVisible,
-}) => {
-  if (!modalVisible) return null
+const TransparentBackground: FC = () => {
+  const { state } = useContext(ConfirmChallengeContext)
+  if (!state.modalVisible) return null
   return <View style={[styles.transparentBackground]} />
 }
 
-export const ConfirmChallengeModal: FC<IConfirmModalProps> = ({
-  modalVisible,
-  challenge,
-}) => {
-  const onConfirmPress = () => {}
-  const onCancelPress = () => {}
+export const ConfirmChallengeModal: FC = () => {
+  const { dispatch: userDispatch } = useContext(UserContext)
+  const { state, dispatch: confirmDispatch } = useContext(
+    ConfirmChallengeContext,
+  )
+  const { modalVisible, challenge } = state
+  const closeModal = () => {
+    confirmDispatch({
+      type: ConfirmChallengeActionTypes.HideModal,
+    })
+  }
+
+  const onConfirmPress = () => {
+    userDispatch({
+      type: UserActionTypes.IncresePoint,
+      payload: {
+        point: challenge.point,
+      },
+    })
+    closeModal()
+  }
+
+  const onCancelPress = () => {
+    closeModal()
+  }
+
+  if (!challenge) return null
+
   return (
     <Modal animationType="fade" transparent visible={modalVisible}>
       <View style={[styles.container]}>
@@ -103,7 +123,7 @@ export const ConfirmChallengeModal: FC<IConfirmModalProps> = ({
         </View>
       </View>
 
-      <TransparentBackground {...{ modalVisible }} />
+      <TransparentBackground />
     </Modal>
   )
 }
