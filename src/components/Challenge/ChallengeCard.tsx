@@ -11,6 +11,10 @@ import {
   ChallengeActionTypes,
   ChallengeContext,
 } from '../../lib/ChallengeContext'
+import {
+  ConfirmChallengeContext,
+  ConfirmChallengeActionTypes,
+} from '../../lib/ConfirmChallengeContext'
 
 interface IChallengeCardProps {
   challenge: any
@@ -85,6 +89,23 @@ const styles = StyleSheet.create({
   },
 })
 
+const DoneChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
+  const { dispatch } = useContext(ConfirmChallengeContext)
+  const onDonePress = () => {
+    dispatch({
+      type: ConfirmChallengeActionTypes.ShowModal,
+      payload: {
+        challenge,
+      },
+    })
+  }
+  return (
+    <TouchableOpacity style={[styles.checkIcon]} onPress={onDonePress}>
+      <FontAwesomeIcon icon={faCheck} color="#147EFB" />
+    </TouchableOpacity>
+  )
+}
+
 const EditChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
   const navigation = useNavigation<ChallengeStackProp>()
   const onEditPress = () => {
@@ -137,9 +158,7 @@ export const ChallengeCard: FC<IChallengeCardProps> = ({ challenge }) => {
         </View>
         <View>
           {!state.editMode ? (
-            <TouchableOpacity style={[styles.checkIcon]}>
-              <FontAwesomeIcon icon={faCheck} color="#147EFB" />
-            </TouchableOpacity>
+            <DoneChallengeButton {...{ challenge }} />
           ) : (
             <EditChallengeButton {...{ challenge }} />
           )}

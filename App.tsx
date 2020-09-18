@@ -6,6 +6,7 @@ import React from 'react'
 
 import { ChallengeProvider } from './src/lib/ChallengeContext'
 import { RewardProvider } from './src/lib/RewardContext'
+import { UserProvider } from './src/lib/UserContext'
 import { Challenge } from './src/screens/Challenge/Challenge'
 import { ChallengeForm } from './src/screens/Challenge/ChallengeForm'
 import { Home } from './src/screens/Home'
@@ -71,11 +72,13 @@ const ChallengeTab = () => {
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Home">
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Challenge" component={ChallengeTab} />
-        <Tab.Screen name="Reward" component={RewardTab} />
-      </Tab.Navigator>
+      <UserProvider>
+        <Tab.Navigator initialRouteName="Home">
+          <Tab.Screen name="Home" component={Home} />
+          <Tab.Screen name="Challenge" component={ChallengeTab} />
+          <Tab.Screen name="Reward" component={RewardTab} />
+        </Tab.Navigator>
+      </UserProvider>
     </NavigationContainer>
   )
 }
