@@ -30,15 +30,15 @@ interface IConfirmChallengeState {
   challenge: Challenge | null
 }
 
-const initState: IConfirmChallengeState = {
+export const initState: IConfirmChallengeState = {
   modalVisible: false,
   challenge: null,
 }
 
-const reducer: Reducer<IConfirmChallengeState, ConfirmChallengeAction> = (
-  state,
-  action,
-) => {
+export const reducer: Reducer<
+  IConfirmChallengeState,
+  ConfirmChallengeAction
+> = (state, action) => {
   switch (action.type) {
     case ConfirmChallengeActionTypes.ShowModal:
       if (action.payload === null || action.payload?.challenge === undefined) {
