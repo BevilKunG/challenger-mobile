@@ -6,6 +6,7 @@ import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'
 import { ChallengeCard } from '../../components/Challenge/ChallengeCard'
+import { ConfirmChallengeModal } from '../../components/Challenge/ConfirmChallengeModal'
 import { Header } from '../../components/Header'
 import {
   ChallengeContext,
@@ -74,10 +75,19 @@ const ChallengeHeader: FC = () => {
 }
 
 export const Challenge: FC = () => {
+  const confirmProps = {
+    modalVisible: true,
+    challenge: {
+      id: '1',
+      name: 'Challenge #1',
+      point: 100,
+    },
+  }
   return (
     <View style={[styles.container]}>
       <ChallengeHeader />
       <ChallengeList />
+      <ConfirmChallengeModal {...confirmProps} />
     </View>
   )
 }
