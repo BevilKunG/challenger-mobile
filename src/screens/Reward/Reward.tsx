@@ -1,15 +1,7 @@
-import { faPlus, faEdit, faBan } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FC, useContext, useEffect } from 'react'
-import {
-  View,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native'
+import { View, ScrollView, StyleSheet } from 'react-native'
 import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'

@@ -6,13 +6,11 @@ import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'
 import { ChallengeCard } from '../../components/Challenge/ChallengeCard'
-import { ConfirmChallengeModal } from '../../components/Challenge/ConfirmChallengeModal'
 import { Header } from '../../components/Header'
 import {
   ChallengeContext,
   ChallengeActionTypes,
 } from '../../lib/ChallengeContext'
-import { ConfirmChallengeProvider } from '../../lib/ConfirmChallengeContext'
 
 const styles = StyleSheet.create({
   container: {
@@ -79,10 +77,7 @@ export const Challenge: FC = () => {
   return (
     <View style={[styles.container]}>
       <ChallengeHeader />
-      <ConfirmChallengeProvider>
-        <ChallengeList />
-        <ConfirmChallengeModal />
-      </ConfirmChallengeProvider>
+      <ChallengeList />
     </View>
   )
 }

@@ -12,9 +12,10 @@ import {
   ChallengeContext,
 } from '../../lib/ChallengeContext'
 import {
-  ConfirmChallengeContext,
-  ConfirmChallengeActionTypes,
-} from '../../lib/ConfirmChallengeContext'
+  ConfirmContext,
+  ConfirmActionTypes,
+  ConfirmTypes,
+} from '../../lib/ConfirmContext'
 
 interface IChallengeCardProps {
   challenge: any
@@ -90,11 +91,12 @@ const styles = StyleSheet.create({
 })
 
 const DoneChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
-  const { dispatch } = useContext(ConfirmChallengeContext)
+  const { dispatch } = useContext(ConfirmContext)
   const onDonePress = () => {
     dispatch({
-      type: ConfirmChallengeActionTypes.ShowModal,
+      type: ConfirmActionTypes.ShowModal,
       payload: {
+        confirmType: ConfirmTypes.ConfirmChallenge,
         challenge,
       },
     })

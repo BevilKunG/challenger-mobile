@@ -4,7 +4,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
+import { ConfirmModal } from './src/components/ConfirmModal'
 import { ChallengeProvider } from './src/lib/ChallengeContext'
+import { ConfirmProvider } from './src/lib/ConfirmContext'
 import { RewardProvider } from './src/lib/RewardContext'
 import { UserProvider } from './src/lib/UserContext'
 import { Challenge } from './src/screens/Challenge/Challenge'
@@ -73,11 +75,15 @@ export default function App() {
   return (
     <NavigationContainer>
       <UserProvider>
-        <Tab.Navigator initialRouteName="Home">
-          <Tab.Screen name="Home" component={Home} />
-          <Tab.Screen name="Challenge" component={ChallengeTab} />
-          <Tab.Screen name="Reward" component={RewardTab} />
-        </Tab.Navigator>
+        <ConfirmProvider>
+          <Tab.Navigator initialRouteName="Home">
+            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Challenge" component={ChallengeTab} />
+            <Tab.Screen name="Reward" component={RewardTab} />
+          </Tab.Navigator>
+
+          <ConfirmModal />
+        </ConfirmProvider>
       </UserProvider>
     </NavigationContainer>
   )

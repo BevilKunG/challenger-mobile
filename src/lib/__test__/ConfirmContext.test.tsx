@@ -1,9 +1,5 @@
 import { Challenge } from '../ChallengeContext'
-import {
-  reducer,
-  initState,
-  ConfirmChallengeActionTypes,
-} from '../ConfirmChallengeContext'
+import { reducer, initState, ConfirmActionTypes } from '../ConfirmContext'
 
 describe('confirm challenge reducer test', () => {
   it('show modal should be update state', () => {
@@ -13,7 +9,7 @@ describe('confirm challenge reducer test', () => {
       point: 100,
     }
     const resultState = reducer(initState, {
-      type: ConfirmChallengeActionTypes.ShowModal,
+      type: ConfirmActionTypes.ShowModal,
       payload: {
         challenge,
       },
@@ -30,7 +26,7 @@ describe('confirm challenge reducer test', () => {
 
   it('hide modal should be update state', () => {
     const resultState = reducer(initState, {
-      type: ConfirmChallengeActionTypes.HideModal,
+      type: ConfirmActionTypes.HideModal,
     })
 
     describe('modal should be hiden', () => {
