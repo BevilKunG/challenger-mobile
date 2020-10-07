@@ -69,19 +69,19 @@ const styles = StyleSheet.create({
   },
 })
 
-interface IConfirmChallengeContentProps {
+interface IConfirmChallengeContentProp {
   challenge: Challenge
   onCancelPress: () => void
   closeModal: () => void
 }
 
-interface IConfirmRewardContentProps {
+interface IConfirmRewardContentProp {
   reward: Reward
   onCancelPress: () => void
   closeModal: () => void
 }
 
-interface IConfirmTicketContentProps {
+interface IConfirmTicketContentProp {
   ticket: Ticket
   onCancelPress: () => void
   closeModal: () => void
@@ -93,7 +93,7 @@ const TransparentBackground: FC = () => {
   return <View style={[styles.transparentBackground]} />
 }
 
-const ConfirmChallengeContent: FC<IConfirmChallengeContentProps> = ({
+const ConfirmChallengeContent: FC<IConfirmChallengeContentProp> = ({
   challenge,
   onCancelPress,
   closeModal,
@@ -137,7 +137,7 @@ const ConfirmChallengeContent: FC<IConfirmChallengeContentProps> = ({
   )
 }
 
-const ConfirmRewardContent: FC<IConfirmRewardContentProps> = ({
+const ConfirmRewardContent: FC<IConfirmRewardContentProp> = ({
   reward,
   onCancelPress,
   closeModal,
@@ -193,7 +193,7 @@ const ConfirmRewardContent: FC<IConfirmRewardContentProps> = ({
   )
 }
 
-const ConfirmTicketContent: FC<IConfirmTicketContentProps> = ({
+const ConfirmTicketContent: FC<IConfirmTicketContentProp> = ({
   ticket,
   onCancelPress,
   closeModal,

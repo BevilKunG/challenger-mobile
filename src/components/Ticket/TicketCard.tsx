@@ -7,11 +7,7 @@ import {
   ConfirmContext,
   ConfirmTypes,
 } from '../../lib/ConfirmContext'
-import {
-  Ticket,
-  TicketActionTypes,
-  TicketContext,
-} from '../../lib/TicketContext'
+import { Ticket } from '../../lib/TicketContext'
 
 const styles = StyleSheet.create({
   container: {

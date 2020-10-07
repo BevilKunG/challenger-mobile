@@ -2,7 +2,7 @@ import 'react-native-gesture-handler'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import React from 'react'
+import React, { FC } from 'react'
 
 import { ConfirmModal } from './src/components/ConfirmModal'
 import { ChallengeProvider } from './src/lib/ChallengeContext'
@@ -34,7 +34,7 @@ export type RootStackParamList = {
 const Tab = createBottomTabNavigator<RootBottomTabParamList>()
 const Stack = createStackNavigator<RootStackParamList>()
 
-const RewardTab = () => {
+const RewardTab: FC = () => {
   return (
     <RewardProvider>
       <Stack.Navigator initialRouteName="Reward">
@@ -54,7 +54,7 @@ const RewardTab = () => {
   )
 }
 
-const ChallengeTab = () => {
+const ChallengeTab: FC = () => {
   return (
     <ChallengeProvider>
       <Stack.Navigator initialRouteName="Challenge">

@@ -4,7 +4,7 @@ import { Challenge } from './ChallengeContext'
 import { Reward } from './RewardContext'
 import { Ticket } from './TicketContext'
 
-interface IConfirmProviderProps {
+interface IConfirmProviderProp {
   children: any
 }
 
@@ -83,7 +83,7 @@ export const ConfirmContext = createContext<IConfirmContext>({
   dispatch: () => null,
 })
 
-export const ConfirmProvider: FC<IConfirmProviderProps> = ({ children }) => {
+export const ConfirmProvider: FC<IConfirmProviderProp> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initState)
   return (
     <ConfirmContext.Provider value={{ state, dispatch }}>

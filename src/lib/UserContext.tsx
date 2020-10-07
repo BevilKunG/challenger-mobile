@@ -10,7 +10,7 @@ interface IUserState {
   user: User | null
 }
 
-interface IUserProviderProps {
+interface IUserProviderProp {
   children: any
 }
 
@@ -81,7 +81,7 @@ export const reducer: Reducer<IUserState, UserAction> = (state, action) => {
   return state
 }
 
-export const UserProvider: FC<IUserProviderProps> = ({ children }) => {
+export const UserProvider: FC<IUserProviderProp> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initState)
   return (
     <UserContext.Provider value={{ state, dispatch }}>

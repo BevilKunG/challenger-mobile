@@ -17,7 +17,7 @@ import {
   ConfirmTypes,
 } from '../../lib/ConfirmContext'
 
-interface IChallengeCardProps {
+interface IChallengeCardProp {
   challenge: any
 }
 
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const DoneChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
+const DoneChallengeButton: FC<IChallengeCardProp> = ({ challenge }) => {
   const { dispatch } = useContext(ConfirmContext)
   const onDonePress = () => {
     dispatch({
@@ -108,7 +108,7 @@ const DoneChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
   )
 }
 
-const EditChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
+const EditChallengeButton: FC<IChallengeCardProp> = ({ challenge }) => {
   const navigation = useNavigation<ChallengeStackProp>()
   const onEditPress = () => {
     navigation.push('ChallengeForm', {
@@ -126,7 +126,7 @@ const EditChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
   )
 }
 
-const DeleteChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
+const DeleteChallengeButton: FC<IChallengeCardProp> = ({ challenge }) => {
   const { dispatch, state } = useContext(ChallengeContext)
   const onDeletePress = () => {
     dispatch({
@@ -146,7 +146,7 @@ const DeleteChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
   )
 }
 
-export const ChallengeCard: FC<IChallengeCardProps> = ({ challenge }) => {
+export const ChallengeCard: FC<IChallengeCardProp> = ({ challenge }) => {
   const { state } = useContext(ChallengeContext)
 
   return (

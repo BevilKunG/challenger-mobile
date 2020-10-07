@@ -10,7 +10,7 @@ interface IChallengeFormContext {
   dispatch: Dispatch<Partial<IChallengeFormState>>
 }
 
-interface IChallengeFormProviderProps {
+interface IChallengeFormProviderProp {
   children: any
 }
 
@@ -36,7 +36,7 @@ export const reducer: Reducer<
   }
 }
 
-export const ChallengeFormProvider: FC<IChallengeFormProviderProps> = ({
+export const ChallengeFormProvider: FC<IChallengeFormProviderProp> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(reducer, initState)

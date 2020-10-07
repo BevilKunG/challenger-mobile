@@ -19,7 +19,7 @@ import {
 } from '../../lib/RewardContext'
 import { UserContext } from '../../lib/UserContext'
 
-interface IRewardCardProps {
+interface IRewardCardProp {
   reward: Reward
 }
 
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const GetRewardButton: FC<IRewardCardProps> = ({ reward }) => {
+const GetRewardButton: FC<IRewardCardProp> = ({ reward }) => {
   const { state: userState } = useContext(UserContext)
   const { user } = userState
   const { dispatch } = useContext(ConfirmContext)
@@ -121,7 +121,7 @@ const GetRewardButton: FC<IRewardCardProps> = ({ reward }) => {
   )
 }
 
-const EditRewardButton: FC<IRewardCardProps> = ({ reward }) => {
+const EditRewardButton: FC<IRewardCardProp> = ({ reward }) => {
   const navigation = useNavigation<RewardStackProp>()
 
   const onEditPress = () => {
@@ -138,7 +138,7 @@ const EditRewardButton: FC<IRewardCardProps> = ({ reward }) => {
   )
 }
 
-const DeleteRewardButton: FC<IRewardCardProps> = ({ reward }) => {
+const DeleteRewardButton: FC<IRewardCardProp> = ({ reward }) => {
   const { state, dispatch } = useContext(RewardContext)
 
   const onDeletePress = () => {
@@ -159,7 +159,7 @@ const DeleteRewardButton: FC<IRewardCardProps> = ({ reward }) => {
   )
 }
 
-export const RewardCard: FC<IRewardCardProps> = ({ reward }) => {
+export const RewardCard: FC<IRewardCardProp> = ({ reward }) => {
   const { state } = useContext(RewardContext)
   return (
     <View style={styles.container}>
