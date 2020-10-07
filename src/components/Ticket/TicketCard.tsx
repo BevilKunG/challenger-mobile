@@ -1,6 +1,12 @@
-import React, { FC } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import React, { FC, useContext } from 'react'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import normalize from 'react-native-normalize'
+
+import {
+  Ticket,
+  TicketActionTypes,
+  TicketContext,
+} from '../../lib/TicketContext'
 
 const styles = StyleSheet.create({
   container: {
@@ -18,17 +24,47 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: normalize(10),
+    paddingVertical: normalize(30),
   },
   ticketName: {
     fontSize: 20,
   },
+  ticketButton: {
+    paddingVertical: normalize(6),
+    paddingHorizontal: normalize(12),
+    borderRadius: 8,
+    backgroundColor: '#32CD32',
+  },
+  ticketButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
 })
 
-export const TicketCard: FC = () => {
+interface ITicketCardProp {
+  ticket: Ticket
+}
+
+export const TicketCard: FC<ITicketCardProp> = ({ ticket }) => {
+  const { dispatch } = useContext(TicketContext)
+
+  const onUsePress = () => {
+    dispatch({
+      type: TicketActionTypes.DeleteTicket,
+      payload: {
+        ticket,
+      },
+    })
+  }
+
   return (
     <View style={[styles.container]}>
       <View style={[styles.cardContainer]}>
-        <Text style={[styles.ticketName]}>Ticket #1</Text>
+        <Text style={[styles.ticketName]}>{ticket.name}</Text>
+        <TouchableOpacity style={[styles.ticketButton]} onPress={onUsePress}>
+          <Text style={[styles.ticketButtonText]}>Use</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )

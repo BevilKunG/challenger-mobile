@@ -9,6 +9,7 @@ import {
   ConfirmTypes,
 } from '../lib/ConfirmContext'
 import { Reward } from '../lib/RewardContext'
+import { TicketContext, TicketActionTypes } from '../lib/TicketContext'
 import { UserActionTypes, UserContext } from '../lib/UserContext'
 
 const styles = StyleSheet.create({
@@ -136,14 +137,26 @@ const ConfirmRewardContent: FC<IConfirmRewardContentProps> = ({
   closeModal,
 }) => {
   const { dispatch: userDispatch } = useContext(UserContext)
+  const { dispatch: ticketDispatch } = useContext(TicketContext)
   const onConfirmPress = () => {
     if (reward) {
+      ticketDispatch({
+        type: TicketActionTypes.AddTicket,
+        payload: {
+          ticket: {
+            id: 'ticket-id',
+            name: reward.name,
+          },
+        },
+      })
+
       userDispatch({
         type: UserActionTypes.DecreasePoint,
         payload: {
           point: reward.point,
         },
       })
+
       closeModal()
     }
   }
@@ -205,6 +218,7 @@ const ConfirmContent: FC = () => {
   }
   return null
 }
+
 export const ConfirmModal: FC = () => {
   const { state } = useContext(ConfirmContext)
   const { modalVisible } = state

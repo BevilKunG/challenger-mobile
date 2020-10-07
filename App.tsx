@@ -8,6 +8,7 @@ import { ConfirmModal } from './src/components/ConfirmModal'
 import { ChallengeProvider } from './src/lib/ChallengeContext'
 import { ConfirmProvider } from './src/lib/ConfirmContext'
 import { RewardProvider } from './src/lib/RewardContext'
+import { TicketProvider } from './src/lib/TicketContext'
 import { UserProvider } from './src/lib/UserContext'
 import { Challenge } from './src/screens/Challenge/Challenge'
 import { ChallengeForm } from './src/screens/Challenge/ChallengeForm'
@@ -78,14 +79,15 @@ export default function App() {
     <NavigationContainer>
       <UserProvider>
         <ConfirmProvider>
-          <Tab.Navigator initialRouteName="Home">
-            <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Challenge" component={ChallengeTab} />
-            <Tab.Screen name="Reward" component={RewardTab} />
-            <Tab.Screen name="Ticket" component={Ticket} />
-          </Tab.Navigator>
-
-          <ConfirmModal />
+          <TicketProvider>
+            <Tab.Navigator initialRouteName="Home">
+              <Tab.Screen name="Home" component={Home} />
+              <Tab.Screen name="Challenge" component={ChallengeTab} />
+              <Tab.Screen name="Reward" component={RewardTab} />
+              <Tab.Screen name="Ticket" component={Ticket} />
+            </Tab.Navigator>
+            <ConfirmModal />
+          </TicketProvider>
         </ConfirmProvider>
       </UserProvider>
     </NavigationContainer>
