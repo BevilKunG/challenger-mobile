@@ -1,6 +1,6 @@
 import React, { FC, createContext, useReducer, Reducer, Dispatch } from 'react'
 
-interface IRewardFormProviderProps {
+interface IRewardFormProviderProp {
   children: any
 }
 
@@ -36,7 +36,7 @@ export const RewardFormContext = createContext<IRewardFormContext>({
   dispatch: () => null,
 })
 
-export const RewardFormProvider: FC<IRewardFormProviderProps> = ({
+export const RewardFormProvider: FC<IRewardFormProviderProp> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(reducer, initState)

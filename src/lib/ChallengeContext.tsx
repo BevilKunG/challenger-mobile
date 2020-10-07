@@ -35,7 +35,7 @@ interface IChallengeState {
   editMode: EditMode
 }
 
-interface IChallengeProviderProps {
+interface IChallengeProviderProp {
   children: any
 }
 
@@ -105,9 +105,7 @@ export const reducer: Reducer<IChallengeState, ChallengeAction> = (
   return state
 }
 
-export const ChallengeProvider: FC<IChallengeProviderProps> = ({
-  children,
-}) => {
+export const ChallengeProvider: FC<IChallengeProviderProp> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initState)
 
   return (

@@ -1,23 +1,20 @@
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FC, useContext } from 'react'
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native'
 import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'
 import { ChallengeCard } from '../../components/Challenge/ChallengeCard'
-import { ConfirmChallengeModal } from '../../components/Challenge/ConfirmChallengeModal'
 import { Header } from '../../components/Header'
 import {
   ChallengeContext,
   ChallengeActionTypes,
 } from '../../lib/ChallengeContext'
-import { ConfirmChallengeProvider } from '../../lib/ConfirmChallengeContext'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: normalize(36),
   },
   scrollViewContainer: {
     flex: 1,
@@ -77,12 +74,9 @@ const ChallengeHeader: FC = () => {
 
 export const Challenge: FC = () => {
   return (
-    <View style={[styles.container]}>
+    <SafeAreaView style={[styles.container]}>
       <ChallengeHeader />
-      <ConfirmChallengeProvider>
-        <ChallengeList />
-        <ConfirmChallengeModal />
-      </ConfirmChallengeProvider>
-    </View>
+      <ChallengeList />
+    </SafeAreaView>
   )
 }

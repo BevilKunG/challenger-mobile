@@ -2,21 +2,26 @@ import 'react-native-gesture-handler'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import React from 'react'
+import React, { FC } from 'react'
 
+import { ConfirmModal } from './src/components/ConfirmModal'
 import { ChallengeProvider } from './src/lib/ChallengeContext'
+import { ConfirmProvider } from './src/lib/ConfirmContext'
 import { RewardProvider } from './src/lib/RewardContext'
+import { TicketProvider } from './src/lib/TicketContext'
 import { UserProvider } from './src/lib/UserContext'
 import { Challenge } from './src/screens/Challenge/Challenge'
 import { ChallengeForm } from './src/screens/Challenge/ChallengeForm'
 import { Home } from './src/screens/Home'
 import { Reward } from './src/screens/Reward/Reward'
 import { RewardForm } from './src/screens/Reward/RewardForm'
+import { Ticket } from './src/screens/Ticket/Ticket'
 
 export type RootBottomTabParamList = {
   Home: any
   Reward: any
   Challenge: any
+  Ticket: any
 }
 
 export type RootStackParamList = {
@@ -29,7 +34,7 @@ export type RootStackParamList = {
 const Tab = createBottomTabNavigator<RootBottomTabParamList>()
 const Stack = createStackNavigator<RootStackParamList>()
 
-const RewardTab = () => {
+const RewardTab: FC = () => {
   return (
     <RewardProvider>
       <Stack.Navigator initialRouteName="Reward">
@@ -49,7 +54,7 @@ const RewardTab = () => {
   )
 }
 
-const ChallengeTab = () => {
+const ChallengeTab: FC = () => {
   return (
     <ChallengeProvider>
       <Stack.Navigator initialRouteName="Challenge">
@@ -73,11 +78,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <UserProvider>
-        <Tab.Navigator initialRouteName="Home">
-          <Tab.Screen name="Home" component={Home} />
-          <Tab.Screen name="Challenge" component={ChallengeTab} />
-          <Tab.Screen name="Reward" component={RewardTab} />
-        </Tab.Navigator>
+        <ConfirmProvider>
+          <TicketProvider>
+            <Tab.Navigator initialRouteName="Home">
+              <Tab.Screen name="Home" component={Home} />
+              <Tab.Screen name="Challenge" component={ChallengeTab} />
+              <Tab.Screen name="Reward" component={RewardTab} />
+              <Tab.Screen name="Ticket" component={Ticket} />
+            </Tab.Navigator>
+            <ConfirmModal />
+          </TicketProvider>
+        </ConfirmProvider>
       </UserProvider>
     </NavigationContainer>
   )
