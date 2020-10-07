@@ -1,6 +1,6 @@
 import React, { FC, createContext, useReducer, Reducer, Dispatch } from 'react'
 
-interface IRewardProviderProps {
+interface IRewardProviderProp {
   children: any
 }
 
@@ -112,7 +112,7 @@ export const reducer: Reducer<IRewardState, RewardAction> = (state, action) => {
   return state
 }
 
-export const RewardProvider: FC<IRewardProviderProps> = ({ children }) => {
+export const RewardProvider: FC<IRewardProviderProp> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initState)
   return (
     <RewardContext.Provider value={{ state, dispatch }}>

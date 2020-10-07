@@ -25,14 +25,14 @@ const styles = StyleSheet.create({
   },
 })
 
-interface IHeaderProps {
+interface IHeaderProp {
   onAddPress: any
   onEditPress: any
   onCancelEditPress: any
   editMode: boolean
 }
 
-export const Header: FC<IHeaderProps> = ({
+export const Header: FC<IHeaderProp> = ({
   onAddPress,
   onEditPress,
   onCancelEditPress,

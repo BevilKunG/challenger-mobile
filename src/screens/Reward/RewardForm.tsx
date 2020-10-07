@@ -3,6 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FC, useContext, useEffect } from 'react'
 import {
   View,
+  SafeAreaView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -26,6 +27,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   formContainer: {
     flex: 1,
@@ -176,10 +178,10 @@ const Form: FC = () => {
 
 export const RewardForm: FC = () => {
   return (
-    <View style={[styles.container]}>
+    <SafeAreaView style={[styles.container]}>
       <RewardFormProvider>
         <Form />
       </RewardFormProvider>
-    </View>
+    </SafeAreaView>
   )
 }

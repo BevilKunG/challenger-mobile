@@ -12,11 +12,12 @@ import {
   ChallengeContext,
 } from '../../lib/ChallengeContext'
 import {
-  ConfirmChallengeContext,
-  ConfirmChallengeActionTypes,
-} from '../../lib/ConfirmChallengeContext'
+  ConfirmContext,
+  ConfirmActionTypes,
+  ConfirmTypes,
+} from '../../lib/ConfirmContext'
 
-interface IChallengeCardProps {
+interface IChallengeCardProp {
   challenge: any
 }
 
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: normalize(5),
     marginVertical: normalize(10),
   },
-  challengeCardContainer: {
+  cardContainer: {
     backgroundColor: '#ffffff',
     shadowColor: '#000000',
     shadowOpacity: 0.1,
@@ -89,12 +90,13 @@ const styles = StyleSheet.create({
   },
 })
 
-const DoneChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
-  const { dispatch } = useContext(ConfirmChallengeContext)
+const DoneChallengeButton: FC<IChallengeCardProp> = ({ challenge }) => {
+  const { dispatch } = useContext(ConfirmContext)
   const onDonePress = () => {
     dispatch({
-      type: ConfirmChallengeActionTypes.ShowModal,
+      type: ConfirmActionTypes.ShowModal,
       payload: {
+        confirmType: ConfirmTypes.ConfirmChallenge,
         challenge,
       },
     })
@@ -106,7 +108,7 @@ const DoneChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
   )
 }
 
-const EditChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
+const EditChallengeButton: FC<IChallengeCardProp> = ({ challenge }) => {
   const navigation = useNavigation<ChallengeStackProp>()
   const onEditPress = () => {
     navigation.push('ChallengeForm', {
@@ -124,7 +126,7 @@ const EditChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
   )
 }
 
-const DeleteChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
+const DeleteChallengeButton: FC<IChallengeCardProp> = ({ challenge }) => {
   const { dispatch, state } = useContext(ChallengeContext)
   const onDeletePress = () => {
     dispatch({
@@ -144,12 +146,12 @@ const DeleteChallengeButton: FC<IChallengeCardProps> = ({ challenge }) => {
   )
 }
 
-export const ChallengeCard: FC<IChallengeCardProps> = ({ challenge }) => {
+export const ChallengeCard: FC<IChallengeCardProp> = ({ challenge }) => {
   const { state } = useContext(ChallengeContext)
 
   return (
     <View style={styles.container}>
-      <View style={[styles.challengeCardContainer]}>
+      <View style={[styles.cardContainer]}>
         <View style={[styles.detailContainer]}>
           <Text style={[styles.challengeName]}>{challenge.name}</Text>
           <Text

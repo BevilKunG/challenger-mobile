@@ -8,13 +8,18 @@ import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'
 import {
+  ConfirmActionTypes,
+  ConfirmContext,
+  ConfirmTypes,
+} from '../../lib/ConfirmContext'
+import {
   RewardActionTypes,
   RewardContext,
   Reward,
 } from '../../lib/RewardContext'
-import { UserContext, UserActionTypes } from '../../lib/UserContext'
+import { UserContext } from '../../lib/UserContext'
 
-interface IRewardCardProps {
+interface IRewardCardProp {
   reward: Reward
 }
 
@@ -83,18 +88,22 @@ const styles = StyleSheet.create({
   },
 })
 
-const GetRewardButton: FC<IRewardCardProps> = ({ reward }) => {
-  const { state, dispatch } = useContext(UserContext)
+const GetRewardButton: FC<IRewardCardProp> = ({ reward }) => {
+  const { state: userState } = useContext(UserContext)
+  const { user } = userState
+  const { dispatch } = useContext(ConfirmContext)
 
   const onGetPress = () => {
     dispatch({
-      type: UserActionTypes.DecreasePoint,
+      type: ConfirmActionTypes.ShowModal,
       payload: {
-        point: reward.point,
+        confirmType: ConfirmTypes.ConfirmReward,
+        reward,
       },
     })
   }
-  if (state.user && state.user.point >= reward.point) {
+
+  if (user && user.point >= reward.point) {
     return (
       <TouchableOpacity
         style={[styles.rewardButton, styles.availableButton]}
@@ -112,7 +121,7 @@ const GetRewardButton: FC<IRewardCardProps> = ({ reward }) => {
   )
 }
 
-const EditRewardButton: FC<IRewardCardProps> = ({ reward }) => {
+const EditRewardButton: FC<IRewardCardProp> = ({ reward }) => {
   const navigation = useNavigation<RewardStackProp>()
 
   const onEditPress = () => {
@@ -129,7 +138,7 @@ const EditRewardButton: FC<IRewardCardProps> = ({ reward }) => {
   )
 }
 
-const DeleteRewardButton: FC<IRewardCardProps> = ({ reward }) => {
+const DeleteRewardButton: FC<IRewardCardProp> = ({ reward }) => {
   const { state, dispatch } = useContext(RewardContext)
 
   const onDeletePress = () => {
@@ -150,7 +159,7 @@ const DeleteRewardButton: FC<IRewardCardProps> = ({ reward }) => {
   )
 }
 
-export const RewardCard: FC<IRewardCardProps> = ({ reward }) => {
+export const RewardCard: FC<IRewardCardProp> = ({ reward }) => {
   const { state } = useContext(RewardContext)
   return (
     <View style={styles.container}>
