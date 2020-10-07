@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: normalize(5),
     marginVertical: normalize(10),
   },
-  challengeCardContainer: {
+  cardContainer: {
     backgroundColor: '#ffffff',
     shadowColor: '#000000',
     shadowOpacity: 0.1,
@@ -151,7 +151,7 @@ export const ChallengeCard: FC<IChallengeCardProps> = ({ challenge }) => {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.challengeCardContainer]}>
+      <View style={[styles.cardContainer]}>
         <View style={[styles.detailContainer]}>
           <Text style={[styles.challengeName]}>{challenge.name}</Text>
           <Text

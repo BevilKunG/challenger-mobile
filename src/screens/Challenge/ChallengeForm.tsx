@@ -4,6 +4,7 @@ import React, { FC, useContext, useEffect } from 'react'
 import {
   StyleSheet,
   View,
+  SafeAreaView,
   Text,
   TextInput,
   KeyboardAvoidingView,
@@ -29,6 +30,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   formContainer: {
     flex: 1,
@@ -187,10 +189,10 @@ const Form: FC = () => {
 
 export const ChallengeForm = () => {
   return (
-    <View style={[styles.container]}>
+    <SafeAreaView style={[styles.container]}>
       <ChallengeFormProvider>
         <Form />
       </ChallengeFormProvider>
-    </View>
+    </SafeAreaView>
   )
 }

@@ -14,11 +14,13 @@ import { ChallengeForm } from './src/screens/Challenge/ChallengeForm'
 import { Home } from './src/screens/Home'
 import { Reward } from './src/screens/Reward/Reward'
 import { RewardForm } from './src/screens/Reward/RewardForm'
+import { Ticket } from './src/screens/Ticket/Ticket'
 
 export type RootBottomTabParamList = {
   Home: any
   Reward: any
   Challenge: any
+  Ticket: any
 }
 
 export type RootStackParamList = {
@@ -80,6 +82,7 @@ export default function App() {
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Challenge" component={ChallengeTab} />
             <Tab.Screen name="Reward" component={RewardTab} />
+            <Tab.Screen name="Ticket" component={Ticket} />
           </Tab.Navigator>
 
           <ConfirmModal />

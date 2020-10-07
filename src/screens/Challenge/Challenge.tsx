@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FC, useContext } from 'react'
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native'
 import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'
@@ -15,7 +15,6 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: normalize(36),
   },
   scrollViewContainer: {
     flex: 1,
@@ -75,9 +74,9 @@ const ChallengeHeader: FC = () => {
 
 export const Challenge: FC = () => {
   return (
-    <View style={[styles.container]}>
+    <SafeAreaView style={[styles.container]}>
       <ChallengeHeader />
       <ChallengeList />
-    </View>
+    </SafeAreaView>
   )
 }

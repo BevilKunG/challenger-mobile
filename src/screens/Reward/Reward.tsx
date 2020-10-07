@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FC, useContext, useEffect } from 'react'
-import { View, ScrollView, StyleSheet } from 'react-native'
+import { View, ScrollView, SafeAreaView, StyleSheet } from 'react-native'
 import normalize from 'react-native-normalize'
 
 import { RootStackParamList } from '../../../App'
@@ -12,7 +12,6 @@ import { RewardActionTypes, RewardContext } from '../../lib/RewardContext'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: normalize(36),
   },
   scrollViewContainer: {
     flex: 1,
@@ -87,9 +86,9 @@ export const Reward: FC = () => {
   }, [])
 
   return (
-    <View style={[styles.container]}>
+    <SafeAreaView style={[styles.container]}>
       <RewardHeader />
       <RewardList />
-    </View>
+    </SafeAreaView>
   )
 }
