@@ -2,6 +2,7 @@ import React, { FC, createContext, useReducer, Dispatch, Reducer } from 'react'
 
 import { Challenge } from './ChallengeContext'
 import { Reward } from './RewardContext'
+import { Ticket } from './TicketContext'
 
 interface IConfirmProviderProps {
   children: any
@@ -15,12 +16,14 @@ export enum ConfirmActionTypes {
 export enum ConfirmTypes {
   ConfirmChallenge = 'CONFIRM_CHALLENGE',
   ConfirmReward = 'CONFIRM_REWARD',
+  ConfirmTicket = 'CONFIRM_TICKET',
 }
 
 type ConfirmActionPayload = {
   confirmType: ConfirmTypes
   challenge?: Challenge
   reward?: Reward
+  ticket?: Ticket
 }
 
 type ConfirmAction = {
@@ -33,6 +36,7 @@ interface IConfirmState {
   confirmType: ConfirmTypes | null
   challenge: Challenge | null
   reward: Reward | null
+  ticket: Ticket | null
 }
 
 interface IConfirmContext {
@@ -45,6 +49,7 @@ export const initState: IConfirmState = {
   confirmType: null,
   challenge: null,
   reward: null,
+  ticket: null,
 }
 
 export const reducer: Reducer<IConfirmState, ConfirmAction> = (
@@ -56,7 +61,8 @@ export const reducer: Reducer<IConfirmState, ConfirmAction> = (
       if (
         action.payload === null ||
         (action.payload?.challenge === undefined &&
-          action.payload?.reward === undefined)
+          action.payload?.reward === undefined &&
+          action.payload?.ticket === undefined)
       ) {
         break
       }

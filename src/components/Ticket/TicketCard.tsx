@@ -3,6 +3,11 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import normalize from 'react-native-normalize'
 
 import {
+  ConfirmActionTypes,
+  ConfirmContext,
+  ConfirmTypes,
+} from '../../lib/ConfirmContext'
+import {
   Ticket,
   TicketActionTypes,
   TicketContext,
@@ -47,12 +52,13 @@ interface ITicketCardProp {
 }
 
 export const TicketCard: FC<ITicketCardProp> = ({ ticket }) => {
-  const { dispatch } = useContext(TicketContext)
+  const { dispatch } = useContext(ConfirmContext)
 
   const onUsePress = () => {
     dispatch({
-      type: TicketActionTypes.DeleteTicket,
+      type: ConfirmActionTypes.ShowModal,
       payload: {
+        confirmType: ConfirmTypes.ConfirmTicket,
         ticket,
       },
     })

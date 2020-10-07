@@ -9,7 +9,7 @@ import {
   ConfirmTypes,
 } from '../lib/ConfirmContext'
 import { Reward } from '../lib/RewardContext'
-import { TicketContext, TicketActionTypes } from '../lib/TicketContext'
+import { TicketContext, TicketActionTypes, Ticket } from '../lib/TicketContext'
 import { UserActionTypes, UserContext } from '../lib/UserContext'
 
 const styles = StyleSheet.create({
@@ -77,6 +77,12 @@ interface IConfirmChallengeContentProps {
 
 interface IConfirmRewardContentProps {
   reward: Reward
+  onCancelPress: () => void
+  closeModal: () => void
+}
+
+interface IConfirmTicketContentProps {
+  ticket: Ticket
   onCancelPress: () => void
   closeModal: () => void
 }
@@ -187,9 +193,51 @@ const ConfirmRewardContent: FC<IConfirmRewardContentProps> = ({
   )
 }
 
+const ConfirmTicketContent: FC<IConfirmTicketContentProps> = ({
+  ticket,
+  onCancelPress,
+  closeModal,
+}) => {
+  const { dispatch: ticketDispatch } = useContext(TicketContext)
+  const onConfirmPress = () => {
+    if (ticket) {
+      ticketDispatch({
+        type: TicketActionTypes.DeleteTicket,
+        payload: {
+          ticket,
+        },
+      })
+
+      closeModal()
+    }
+  }
+
+  return (
+    <>
+      <View>
+        <Text style={[styles.doneText]}>Use Ticket</Text>
+      </View>
+
+      <View>
+        <Text style={[styles.itemName]}>{ticket.name}</Text>
+      </View>
+
+      <View style={[styles.buttonsContainer]}>
+        <TouchableOpacity onPress={onCancelPress}>
+          <Text style={[styles.buttonText]}>Cancel</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={onConfirmPress}>
+          <Text style={[styles.buttonText, styles.submitButton]}>Confirm</Text>
+        </TouchableOpacity>
+      </View>
+    </>
+  )
+}
+
 const ConfirmContent: FC = () => {
   const { state, dispatch: confirmDispatch } = useContext(ConfirmContext)
-  const { confirmType, challenge, reward } = state
+  const { confirmType, challenge, reward, ticket } = state
 
   const closeModal = () => {
     confirmDispatch({
@@ -214,6 +262,11 @@ const ConfirmContent: FC = () => {
     case ConfirmTypes.ConfirmReward: {
       if (!reward) break
       return <ConfirmRewardContent {...{ reward, onCancelPress, closeModal }} />
+    }
+
+    case ConfirmTypes.ConfirmTicket: {
+      if (!ticket) break
+      return <ConfirmTicketContent {...{ ticket, onCancelPress, closeModal }} />
     }
   }
   return null
